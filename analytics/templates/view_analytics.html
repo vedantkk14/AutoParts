@@ -1,0 +1,547 @@
+{% extends 'base.html' %}
+{% block head %}
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap"
+    rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "background": "#f8f9ff",
+                    "on-primary-container": "#8293ba",
+                    "tertiary-fixed": "#ffddb8",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#071b3b",
+                    "surface-tint": "#4e5e82",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "primary-container": "#1a2b4c",
+                    "on-secondary-fixed": "#00174b",
+                    "outline-variant": "#c5c6cf",
+                    "on-secondary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#f8f9ff",
+                    "on-surface-variant": "#44474e",
+                    "on-secondary-container": "#fefcff",
+                    "surface-variant": "#d3e4fe",
+                    "surface-container-highest": "#d3e4fe",
+                    "primary-fixed-dim": "#b6c6f0",
+                    "surface-dim": "#cbdbf5",
+                    "surface": "#f8f9ff",
+                    "on-primary-fixed-variant": "#364669",
+                    "primary-fixed": "#d8e2ff",
+                    "on-secondary-fixed-variant": "#003ea8",
+                    "inverse-on-surface": "#eaf1ff",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "error-container": "#ffdad6",
+                    "on-error": "#ffffff",
+                    "tertiary": "#241300",
+                    "on-background": "#0b1c30",
+                    "inverse-surface": "#213145",
+                    "surface-container-high": "#dce9ff",
+                    "tertiary-container": "#402600",
+                    "secondary-fixed": "#dbe1ff",
+                    "surface-container-low": "#eff4ff",
+                    "secondary": "#0051d5",
+                    "outline": "#75777f",
+                    "inverse-primary": "#b6c6f0",
+                    "on-surface": "#0b1c30",
+                    "secondary-fixed-dim": "#b4c5ff",
+                    "error": "#ba1a1a",
+                    "on-tertiary-container": "#cd8300",
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface-container": "#e5eeff",
+                    "secondary-container": "#316bf3",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "primary": "#031636"
+                },
+                "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+                },
+                "spacing": {
+                    "unit": "4px",
+                    "md": "16px",
+                    "margin-mobile": "16px",
+                    "gutter": "16px",
+                    "sm": "8px",
+                    "xl": "32px",
+                    "margin-desktop": "32px",
+                    "xs": "4px",
+                    "lg": "24px"
+                },
+                "fontFamily": {
+                    "label-caps": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "data-mono": ["Inter"]
+                },
+                "fontSize": {
+                    "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                    "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                    "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                    "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                    "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                    "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                    "display-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "data-mono": ["14px", { "lineHeight": "20px", "fontWeight": "600" }]
+                }
+            }
+        }
+    }
+</script>
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f8f9ff;
+    }
+
+    .ambient-shadow {
+        box-shadow: 0 4px 12px rgba(26, 43, 76, 0.05);
+    }
+</style>
+
+{% endblock %}
+
+{% block body_class %} bg-background text-on-surface flex min-h-screen {% endblock %}
+
+{% block content %}
+<!-- SideNavBar (Predicted) -->
+{% include 'sidebar.html' %}
+<!-- Main Content Area -->
+<div class="flex-1 md:ml-64 flex flex-col min-h-screen overflow-x-hidden transition-all duration-300" id="main-content">
+    <!-- TopNavBar (Predicted) -->
+    {% include 'top_app_bar.html' %}
+    <!-- Dashboard Content -->
+    <main class="flex-1 p-margin-mobile pb-24 md:pb-lg md:p-margin-desktop bg-surface-bright overflow-y-auto">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-xl gap-sm">
+            <div>
+                <h2 class="font-display-lg text-display-lg text-primary">Analytics Overview</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant mt-xs">Q3 2023 Performance Metrics &amp;
+                    Operational Insights</p>
+            </div>
+            <div class="flex gap-sm">
+                <button
+                    class="bg-surface-container-lowest border border-outline-variant text-on-surface font-body-md text-body-md py-sm px-md rounded-lg flex items-center gap-xs hover:bg-surface-container-low transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">calendar_today</span>
+                    Last 30 Days
+                    <span class="material-symbols-outlined text-[18px]">arrow_drop_down</span>
+                </button>
+                <button
+                    class="bg-surface-container-lowest border border-outline-variant text-on-surface p-sm rounded-lg hover:bg-surface-container-low transition-colors">
+                    <span class="material-symbols-outlined text-[20px]">download</span>
+                </button>
+            </div>
+        </div>
+        <!-- 1. Summary Metrics -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-xl">
+            <!-- Total Revenue -->
+            <div
+                class="bg-surface-container-lowest rounded-lg p-md border border-outline-variant ambient-shadow flex flex-col justify-between h-full">
+                <div class="flex justify-between items-start mb-sm">
+                    <span class="font-label-caps text-label-caps text-on-surface-variant">Total Revenue</span>
+                    <div class="bg-surface-container-low p-xs rounded-full">
+                        <span class="material-symbols-outlined text-secondary text-[20px]">payments</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="font-display-lg text-display-lg text-primary mb-xs">$1.24M</div>
+                    <div class="flex items-center gap-xs font-body-sm text-body-sm">
+                        <span class="text-[#059669] flex items-center"><span
+                                class="material-symbols-outlined text-[14px]">trending_up</span> 12.5%</span>
+                        <span class="text-on-surface-variant">vs last month</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Total Orders -->
+            <div
+                class="bg-surface-container-lowest rounded-lg p-md border border-outline-variant ambient-shadow flex flex-col justify-between h-full">
+                <div class="flex justify-between items-start mb-sm">
+                    <span class="font-label-caps text-label-caps text-on-surface-variant">Total Orders</span>
+                    <div class="bg-surface-container-low p-xs rounded-full">
+                        <span class="material-symbols-outlined text-secondary text-[20px]">shopping_cart_checkout</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="font-display-lg text-display-lg text-primary mb-xs">3,492</div>
+                    <div class="flex items-center gap-xs font-body-sm text-body-sm">
+                        <span class="text-[#059669] flex items-center"><span
+                                class="material-symbols-outlined text-[14px]">trending_up</span> 8.2%</span>
+                        <span class="text-on-surface-variant">vs last month</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Avg Order Value -->
+            <div
+                class="bg-surface-container-lowest rounded-lg p-md border border-outline-variant ambient-shadow flex flex-col justify-between h-full">
+                <div class="flex justify-between items-start mb-sm">
+                    <span class="font-label-caps text-label-caps text-on-surface-variant">Average Order Value</span>
+                    <div class="bg-surface-container-low p-xs rounded-full">
+                        <span class="material-symbols-outlined text-secondary text-[20px]">receipt_long</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="font-display-lg text-display-lg text-primary mb-xs">$355.10</div>
+                    <div class="flex items-center gap-xs font-body-sm text-body-sm">
+                        <span class="text-on-surface-variant flex items-center"><span
+                                class="material-symbols-outlined text-[14px]">trending_flat</span> 1.1%</span>
+                        <span class="text-on-surface-variant">vs last month</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Outstanding Receivables -->
+            <div
+                class="bg-surface-container-lowest rounded-lg p-md border border-error ambient-shadow flex flex-col justify-between h-full relative overflow-hidden">
+                <div class="absolute right-0 top-0 w-2 h-full bg-error"></div>
+                <div class="flex justify-between items-start mb-sm">
+                    <span class="font-label-caps text-label-caps text-on-surface-variant">Outstanding
+                        Receivables</span>
+                    <div class="bg-error-container p-xs rounded-full">
+                        <span class="material-symbols-outlined text-error text-[20px]">warning</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="font-display-lg text-display-lg text-error mb-xs">$84.5K</div>
+                    <div class="flex items-center gap-xs font-body-sm text-body-sm">
+                        <span class="text-error flex items-center"><span
+                                class="material-symbols-outlined text-[14px]">arrow_upward</span> Action
+                            Required</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bento Grid Layout for Charts & Insights -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+            <!-- 2. Revenue & Order Trends (Spans 2 columns) -->
+            <div
+                class="lg:col-span-2 bg-surface-container-lowest rounded-lg border border-outline-variant ambient-shadow p-lg flex flex-col">
+                <div class="flex justify-between items-center mb-lg">
+                    <div>
+                        <h3 class="font-headline-sm text-headline-sm text-primary">Revenue &amp; Order Volume</h3>
+                        <p class="font-body-sm text-body-sm text-on-surface-variant">12 Month Historical Trend</p>
+                    </div>
+                    <div class="flex gap-sm">
+                        <div class="flex items-center gap-xs">
+                            <div class="w-3 h-3 rounded-full bg-secondary"></div>
+                            <span class="font-body-sm text-body-sm text-on-surface-variant">Revenue</span>
+                        </div>
+                        <div class="flex items-center gap-xs">
+                            <div class="w-3 h-3 rounded-full bg-tertiary-fixed-dim"></div>
+                            <span class="font-body-sm text-body-sm text-on-surface-variant">Orders</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Faux Chart Area using CSS Gradients & Shapes to simulate area chart -->
+                <div
+                    class="flex-1 relative min-h-[300px] border-b border-l border-outline-variant flex items-end pt-lg">
+                    <!-- Y Axis Labels -->
+                    <div
+                        class="absolute left-[-40px] top-0 bottom-0 flex flex-col justify-between font-body-sm text-body-sm text-on-surface-variant pb-md text-right w-[32px]">
+                        <span>150k</span>
+                        <span>100k</span>
+                        <span>50k</span>
+                        <span>0</span>
+                    </div>
+                    <!-- Grid Lines -->
+                    <div class="absolute inset-0 flex flex-col justify-between pointer-events-none">
+                        <div class="w-full border-t border-outline-variant opacity-20 h-0"></div>
+                        <div class="w-full border-t border-outline-variant opacity-20 h-0"></div>
+                        <div class="w-full border-t border-outline-variant opacity-20 h-0"></div>
+                        <div class="w-full h-0"></div>
+                    </div>
+                    <!-- Faux Data Visualization (Area/Bar mix) -->
+                    <div
+                        class="w-full h-full flex items-end justify-between px-sm gap-xs sm:gap-sm relative z-10 pb-[1px]">
+                        <!-- Month 1 -->
+                        <div class="w-full flex flex-col justify-end items-center h-full group relative">
+                            <div
+                                class="w-full bg-secondary opacity-20 h-[40%] rounded-t-sm transition-all group-hover:opacity-40">
+                            </div>
+                            <div class="w-1/2 bg-secondary absolute bottom-0 h-[40%] rounded-t-sm"></div>
+                            <div
+                                class="w-[3px] bg-tertiary-fixed-dim absolute bottom-0 h-[30%] left-1/2 -translate-x-1/2 rounded-t-full">
+                            </div>
+                        </div>
+                        <!-- Month 2 -->
+                        <div class="w-full flex flex-col justify-end items-center h-full group relative">
+                            <div
+                                class="w-full bg-secondary opacity-20 h-[45%] rounded-t-sm transition-all group-hover:opacity-40">
+                            </div>
+                            <div class="w-1/2 bg-secondary absolute bottom-0 h-[45%] rounded-t-sm"></div>
+                            <div
+                                class="w-[3px] bg-tertiary-fixed-dim absolute bottom-0 h-[35%] left-1/2 -translate-x-1/2 rounded-t-full">
+                            </div>
+                        </div>
+                        <!-- Month 3 -->
+                        <div class="w-full flex flex-col justify-end items-center h-full group relative">
+                            <div
+                                class="w-full bg-secondary opacity-20 h-[35%] rounded-t-sm transition-all group-hover:opacity-40">
+                            </div>
+                            <div class="w-1/2 bg-secondary absolute bottom-0 h-[35%] rounded-t-sm"></div>
+                            <div
+                                class="w-[3px] bg-tertiary-fixed-dim absolute bottom-0 h-[40%] left-1/2 -translate-x-1/2 rounded-t-full">
+                            </div>
+                        </div>
+                        <!-- Month 4 -->
+                        <div class="w-full flex flex-col justify-end items-center h-full group relative">
+                            <div
+                                class="w-full bg-secondary opacity-20 h-[50%] rounded-t-sm transition-all group-hover:opacity-40">
+                            </div>
+                            <div class="w-1/2 bg-secondary absolute bottom-0 h-[50%] rounded-t-sm"></div>
+                            <div
+                                class="w-[3px] bg-tertiary-fixed-dim absolute bottom-0 h-[45%] left-1/2 -translate-x-1/2 rounded-t-full">
+                            </div>
+                        </div>
+                        <!-- Month 5 -->
+                        <div class="w-full flex flex-col justify-end items-center h-full group relative">
+                            <div
+                                class="w-full bg-secondary opacity-20 h-[60%] rounded-t-sm transition-all group-hover:opacity-40">
+                            </div>
+                            <div class="w-1/2 bg-secondary absolute bottom-0 h-[60%] rounded-t-sm"></div>
+                            <div
+                                class="w-[3px] bg-tertiary-fixed-dim absolute bottom-0 h-[55%] left-1/2 -translate-x-1/2 rounded-t-full">
+                            </div>
+                        </div>
+                        <!-- Month 6 -->
+                        <div class="w-full flex flex-col justify-end items-center h-full group relative">
+                            <div
+                                class="w-full bg-secondary opacity-20 h-[55%] rounded-t-sm transition-all group-hover:opacity-40">
+                            </div>
+                            <div class="w-1/2 bg-secondary absolute bottom-0 h-[55%] rounded-t-sm"></div>
+                            <div
+                                class="w-[3px] bg-tertiary-fixed-dim absolute bottom-0 h-[60%] left-1/2 -translate-x-1/2 rounded-t-full">
+                            </div>
+                        </div>
+                        <!-- Month 7 -->
+                        <div class="w-full flex flex-col justify-end items-center h-full group relative">
+                            <div
+                                class="w-full bg-secondary opacity-20 h-[70%] rounded-t-sm transition-all group-hover:opacity-40">
+                            </div>
+                            <div class="w-1/2 bg-secondary absolute bottom-0 h-[70%] rounded-t-sm"></div>
+                            <div
+                                class="w-[3px] bg-tertiary-fixed-dim absolute bottom-0 h-[65%] left-1/2 -translate-x-1/2 rounded-t-full">
+                            </div>
+                        </div>
+                        <!-- Month 8 -->
+                        <div class="w-full flex flex-col justify-end items-center h-full group relative">
+                            <div
+                                class="w-full bg-secondary opacity-20 h-[75%] rounded-t-sm transition-all group-hover:opacity-40">
+                            </div>
+                            <div class="w-1/2 bg-secondary absolute bottom-0 h-[75%] rounded-t-sm"></div>
+                            <div
+                                class="w-[3px] bg-tertiary-fixed-dim absolute bottom-0 h-[80%] left-1/2 -translate-x-1/2 rounded-t-full">
+                            </div>
+                        </div>
+                        <!-- Month 9 -->
+                        <div class="w-full flex flex-col justify-end items-center h-full group relative">
+                            <div
+                                class="w-full bg-secondary opacity-20 h-[65%] rounded-t-sm transition-all group-hover:opacity-40">
+                            </div>
+                            <div class="w-1/2 bg-secondary absolute bottom-0 h-[65%] rounded-t-sm"></div>
+                            <div
+                                class="w-[3px] bg-tertiary-fixed-dim absolute bottom-0 h-[70%] left-1/2 -translate-x-1/2 rounded-t-full">
+                            </div>
+                        </div>
+                        <!-- Month 10 -->
+                        <div class="w-full flex flex-col justify-end items-center h-full group relative">
+                            <div
+                                class="w-full bg-secondary opacity-20 h-[85%] rounded-t-sm transition-all group-hover:opacity-40">
+                            </div>
+                            <div class="w-1/2 bg-secondary absolute bottom-0 h-[85%] rounded-t-sm"></div>
+                            <div
+                                class="w-[3px] bg-tertiary-fixed-dim absolute bottom-0 h-[75%] left-1/2 -translate-x-1/2 rounded-t-full">
+                            </div>
+                        </div>
+                        <!-- Month 11 -->
+                        <div class="w-full flex flex-col justify-end items-center h-full group relative">
+                            <div
+                                class="w-full bg-secondary opacity-20 h-[90%] rounded-t-sm transition-all group-hover:opacity-40">
+                            </div>
+                            <div class="w-1/2 bg-secondary absolute bottom-0 h-[90%] rounded-t-sm"></div>
+                            <div
+                                class="w-[3px] bg-tertiary-fixed-dim absolute bottom-0 h-[85%] left-1/2 -translate-x-1/2 rounded-t-full">
+                            </div>
+                        </div>
+                        <!-- Month 12 -->
+                        <div class="w-full flex flex-col justify-end items-center h-full group relative">
+                            <div
+                                class="w-full bg-secondary opacity-20 h-[100%] rounded-t-sm transition-all group-hover:opacity-40">
+                            </div>
+                            <div class="w-1/2 bg-secondary absolute bottom-0 h-[100%] rounded-t-sm"></div>
+                            <div
+                                class="w-[3px] bg-tertiary-fixed-dim absolute bottom-0 h-[95%] left-1/2 -translate-x-1/2 rounded-t-full">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- X Axis Labels -->
+                <div
+                    class="flex justify-between mt-sm font-body-sm text-body-sm text-on-surface-variant px-sm ml-[2px]">
+                    <span>Jan</span>
+                    <span>Feb</span>
+                    <span>Mar</span>
+                    <span>Apr</span>
+                    <span>May</span>
+                    <span>Jun</span>
+                    <span>Jul</span>
+                    <span>Aug</span>
+                    <span>Sep</span>
+                    <span>Oct</span>
+                    <span>Nov</span>
+                    <span>Dec</span>
+                </div>
+            </div>
+            <!-- 3. Product Performance -->
+            <div
+                class="bg-surface-container-lowest rounded-lg border border-outline-variant ambient-shadow p-lg flex flex-col">
+                <h3 class="font-headline-sm text-headline-sm text-primary mb-lg">Top Selling Parts</h3>
+                <div class="space-y-md flex-1">
+                    <!-- Part Item -->
+                    <div>
+                        <div class="flex justify-between items-center mb-xs">
+                            <span class="font-data-mono text-data-mono text-on-surface">Brake Pad Set - F150</span>
+                            <span class="font-data-mono text-data-mono text-primary">$42.5k</span>
+                        </div>
+                        <div class="flex items-center gap-sm">
+                            <div class="flex-1 h-2 bg-surface-container-high rounded-full overflow-hidden">
+                                <div class="h-full bg-secondary w-[85%]"></div>
+                            </div>
+                            <span class="font-label-caps text-label-caps text-on-surface-variant w-12 text-right">842
+                                U</span>
+                        </div>
+                    </div>
+                    <!-- Part Item -->
+                    <div>
+                        <div class="flex justify-between items-center mb-xs">
+                            <span class="font-data-mono text-data-mono text-on-surface">Alternator 120A HD</span>
+                            <span class="font-data-mono text-data-mono text-primary">$38.1k</span>
+                        </div>
+                        <div class="flex items-center gap-sm">
+                            <div class="flex-1 h-2 bg-surface-container-high rounded-full overflow-hidden">
+                                <div class="h-full bg-secondary w-[70%]"></div>
+                            </div>
+                            <span class="font-label-caps text-label-caps text-on-surface-variant w-12 text-right">310
+                                U</span>
+                        </div>
+                    </div>
+                    <!-- Part Item -->
+                    <div>
+                        <div class="flex justify-between items-center mb-xs">
+                            <span class="font-data-mono text-data-mono text-on-surface">Oil Filter Bulk Box
+                                (x50)</span>
+                            <span class="font-data-mono text-data-mono text-primary">$29.8k</span>
+                        </div>
+                        <div class="flex items-center gap-sm">
+                            <div class="flex-1 h-2 bg-surface-container-high rounded-full overflow-hidden">
+                                <div class="h-full bg-secondary w-[55%]"></div>
+                            </div>
+                            <span class="font-label-caps text-label-caps text-on-surface-variant w-12 text-right">1,204
+                                U</span>
+                        </div>
+                    </div>
+                    <!-- Part Item -->
+                    <div>
+                        <div class="flex justify-between items-center mb-xs">
+                            <span class="font-data-mono text-data-mono text-on-surface">LED Headlamp Assm.</span>
+                            <span class="font-data-mono text-data-mono text-primary">$24.2k</span>
+                        </div>
+                        <div class="flex items-center gap-sm">
+                            <div class="flex-1 h-2 bg-surface-container-high rounded-full overflow-hidden">
+                                <div class="h-full bg-secondary w-[45%]"></div>
+                            </div>
+                            <span class="font-label-caps text-label-caps text-on-surface-variant w-12 text-right">180
+                                U</span>
+                        </div>
+                    </div>
+                    <!-- Part Item -->
+                    <div>
+                        <div class="flex justify-between items-center mb-xs">
+                            <span class="font-data-mono text-data-mono text-on-surface">Ignition Coil Pack</span>
+                            <span class="font-data-mono text-data-mono text-primary">$18.9k</span>
+                        </div>
+                        <div class="flex items-center gap-sm">
+                            <div class="flex-1 h-2 bg-surface-container-high rounded-full overflow-hidden">
+                                <div class="h-full bg-secondary w-[30%]"></div>
+                            </div>
+                            <span class="font-label-caps text-label-caps text-on-surface-variant w-12 text-right">412
+                                U</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Inventory Turnover Insight -->
+                <div class="mt-lg pt-md border-t border-outline-variant">
+                    <div class="flex justify-between items-center mb-xs">
+                        <span class="font-body-md text-body-md text-on-surface-variant">Inventory Turnover
+                            Rate</span>
+                        <span class="font-headline-sm text-headline-sm text-primary">8.4x</span>
+                    </div>
+                    <p class="font-body-sm text-body-sm text-[#059669]">Healthy turnover. +0.2x from last quarter.
+                    </p>
+                </div>
+            </div>
+            <!-- 4. Customer Insights -->
+            <div class="bg-surface-container-lowest rounded-lg border border-outline-variant ambient-shadow p-lg">
+                <div class="flex justify-between items-center mb-md">
+                    <h3 class="font-headline-sm text-headline-sm text-primary">Top Customers</h3>
+                    <a href="{% url 'view_customers' %}"
+                        class="text-secondary font-label-caps text-label-caps hover:underline">View All</a>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-outline-variant">
+                                <th class="py-sm font-label-caps text-label-caps text-on-surface-variant font-normal">
+                                    Customer</th>
+                                <th
+                                    class="py-sm font-label-caps text-label-caps text-on-surface-variant font-normal text-right">
+                                    YTD Rev</th>
+                            </tr>
+                        </thead>
+                        <tbody class="font-body-md text-body-md">
+                            <tr
+                                class="border-b border-outline-variant/50 hover:bg-surface-container-low transition-colors">
+                                <td class="py-md font-medium text-on-surface">Metro Auto Repair</td>
+                                <td class="py-md text-right font-data-mono">$142.5k</td>
+                            </tr>
+                            <tr
+                                class="border-b border-outline-variant/50 hover:bg-surface-container-low transition-colors">
+                                <td class="py-md font-medium text-on-surface">National Fleet Services</td>
+                                <td class="py-md text-right font-data-mono">$118.2k</td>
+                            </tr>
+                            <tr
+                                class="border-b border-outline-variant/50 hover:bg-surface-container-low transition-colors">
+                                <td class="py-md font-medium text-on-surface">Bob's Garage Chain</td>
+                                <td class="py-md text-right font-data-mono">$89.4k</td>
+                            </tr>
+                            <tr
+                                class="border-b border-outline-variant/50 hover:bg-surface-container-low transition-colors">
+                                <td class="py-md font-medium text-on-surface">Westside Body Shop</td>
+                                <td class="py-md text-right font-data-mono">$76.1k</td>
+                            </tr>
+                            <tr class="hover:bg-surface-container-low transition-colors">
+                                <td class="py-md font-medium text-on-surface">QuickLube Franchise</td>
+                                <td class="py-md text-right font-data-mono">$45.8k</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- BottomNavBar (Predicted) -->
+        {% include 'bottom_nav_bar.html' %}
+    </main>
+</div>
+{% endblock %}

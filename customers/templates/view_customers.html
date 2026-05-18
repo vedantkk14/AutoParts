@@ -1,0 +1,481 @@
+{% extends 'base.html' %}
+{% block head %}
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Custom scrollbar for data tables to fit industrial theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f8f9ff;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c5c6cf;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #75777f;
+        }
+    </style>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#003ea8",
+                        "inverse-primary": "#b6c6f0",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#d3e4fe",
+                        "surface-container-high": "#dce9ff",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "secondary": "#0051d5",
+                        "surface-container-low": "#eff4ff",
+                        "on-primary-fixed-variant": "#364669",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#071b3b",
+                        "secondary-fixed": "#dbe1ff",
+                        "primary-fixed-dim": "#b6c6f0",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-background": "#0b1c30",
+                        "surface-dim": "#cbdbf5",
+                        "outline": "#75777f",
+                        "tertiary": "#241300",
+                        "surface": "#f8f9ff",
+                        "tertiary-container": "#402600",
+                        "background": "#f8f9ff",
+                        "inverse-surface": "#213145",
+                        "outline-variant": "#c5c6cf",
+                        "surface-container-highest": "#d3e4fe",
+                        "primary-fixed": "#d8e2ff",
+                        "on-surface-variant": "#44474e",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#4e5e82",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-surface": "#0b1c30",
+                        "on-secondary-container": "#fefcff",
+                        "surface-bright": "#f8f9ff",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-primary-container": "#8293ba",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#e5eeff",
+                        "secondary-fixed-dim": "#b4c5ff",
+                        "on-secondary-fixed": "#00174b",
+                        "secondary-container": "#316bf3",
+                        "primary-container": "#1a2b4c",
+                        "on-tertiary-container": "#cd8300",
+                        "primary": "#031636"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "unit": "4px",
+                        "margin-mobile": "16px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "margin-desktop": "32px",
+                        "xl": "32px",
+                        "gutter": "16px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Inter", "sans-serif"],
+                        "body-sm": ["Inter", "sans-serif"],
+                        "data-mono": ["Inter", "monospace"],
+                        "headline-sm": ["Inter", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "headline-md": ["Inter", "sans-serif"],
+                        "label-caps": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+{% endblock %}
+
+{% block body_class %} bg-background text-on-background font-body-md text-body-md antialiased selection:bg-secondary-fixed selection:text-on-secondary-fixed {% endblock %}
+
+{% block content %}
+    <!-- SideNavBar (Shared Component) -->
+    {% include 'sidebar.html' %}
+    <!-- Main Content Area -->
+    <main class="md:ml-64 flex flex-col min-h-screen overflow-x-hidden transition-all duration-300" id="main-content">
+        <!-- TopAppBar (Shared Component) -->
+        {% include 'top_app_bar.html' %}
+        <!-- Page Content Canvas -->
+        <div class="p-margin-desktop flex flex-col gap-lg bg-background flex-1 pb-24 md:pb-lg">
+            <!-- Page Header Row -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-md">
+                <div>
+                    <h1 class="font-display-lg text-display-lg font-bold text-on-surface">Customers</h1>
+                    <p class="font-body-md text-body-md text-on-surface-variant mt-unit">Manage client accounts, credit
+                        tiers, and contact information.</p>
+                </div>
+                <a href="{% url 'create_customer' %}"
+                    class="bg-secondary hover:bg-secondary-container text-on-secondary font-body-sm text-body-sm font-bold py-sm px-md rounded-DEFAULT transition-colors flex items-center gap-sm shadow-sm">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">person_add</span>
+                    Add New Customer
+                </a>
+            </div>
+            <!-- Quick Stats Bento Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+                <!-- Stat Card 1 -->
+                <div
+                    class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md shadow-sm flex flex-col justify-between">
+                    <div class="flex justify-between items-center mb-md">
+                        <span class="font-body-sm text-body-sm text-on-surface-variant">Total Customers</span>
+                        <span class="material-symbols-outlined text-outline">groups</span>
+                    </div>
+                    <div class="flex items-baseline gap-sm">
+                        <span class="font-headline-md text-headline-md font-bold text-on-surface">1,248</span>
+                        <span class="font-body-sm text-body-sm text-on-primary-container">+12% YTD</span>
+                    </div>
+                </div>
+                <!-- Stat Card 2 -->
+                <div
+                    class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md shadow-sm flex flex-col justify-between">
+                    <div class="flex justify-between items-center mb-md">
+                        <span class="font-body-sm text-body-sm text-on-surface-variant">Total Outstanding Balance</span>
+                        <span class="material-symbols-outlined text-outline">account_balance_wallet</span>
+                    </div>
+                    <div class="flex items-baseline gap-sm">
+                        <span class="font-data-mono text-headline-sm font-bold text-on-surface">$482,500.00</span>
+                    </div>
+                </div>
+                <!-- Stat Card 3 -->
+                <div
+                    class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md shadow-sm flex flex-col justify-between">
+                    <div class="flex justify-between items-center mb-md">
+                        <span class="font-body-sm text-body-sm text-on-surface-variant">New Customers (This
+                            Month)</span>
+                        <span class="material-symbols-outlined text-outline">trending_up</span>
+                    </div>
+                    <div class="flex items-baseline gap-sm">
+                        <span class="font-headline-md text-headline-md font-bold text-on-surface">24</span>
+                    </div>
+                </div>
+                <!-- Stat Card 4 -->
+                <div
+                    class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md shadow-sm flex flex-col justify-between">
+                    <div class="flex justify-between items-center mb-md">
+                        <span class="font-body-sm text-body-sm text-on-surface-variant">Active Credit Accounts</span>
+                        <span class="material-symbols-outlined text-outline">verified_user</span>
+                    </div>
+                    <div class="flex items-baseline gap-sm">
+                        <span class="font-headline-md text-headline-md font-bold text-on-surface">1,180</span>
+                        <span class="font-body-sm text-body-sm text-on-surface-variant">/ 1,248</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Main Data Table Container -->
+            <div
+                class="bg-surface-container-lowest border border-outline-variant rounded-lg shadow-sm flex flex-col overflow-hidden">
+                <!-- Table Controls Toolbar -->
+                <div
+                    class="p-md border-b border-outline-variant bg-surface flex flex-col lg:flex-row gap-md justify-between items-center">
+                    <!-- Specific Page Search -->
+                    <div class="relative w-full lg:w-96">
+                        <span
+                            class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+                        <input
+                            class="w-full bg-surface-container-lowest border border-outline-variant rounded-DEFAULT py-unit pl-xl pr-xl text-body-sm font-body-sm text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary placeholder-on-surface-variant h-10"
+                            placeholder="Search by name, ID, or phone..." type="text" />
+                        <button
+                            class="absolute right-sm top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-secondary">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">mic</span>
+                        </button>
+                    </div>
+                    <!-- Filters -->
+                    <div class="flex gap-sm w-full lg:w-auto">
+                        <select
+                            class="bg-surface-container-lowest border border-outline-variant text-on-surface font-body-sm text-body-sm rounded-DEFAULT py-unit px-sm h-10 focus:ring-secondary focus:border-secondary outline-none cursor-pointer">
+                            <option>All Regions</option>
+                            <option>North America</option>
+                            <option>Europe</option>
+                            <option>Asia Pacific</option>
+                        </select>
+                        <select
+                            class="bg-surface-container-lowest border border-outline-variant text-on-surface font-body-sm text-body-sm rounded-DEFAULT py-unit px-sm h-10 focus:ring-secondary focus:border-secondary outline-none cursor-pointer">
+                            <option>All Tiers</option>
+                            <option>Gold Tier</option>
+                            <option>Silver Tier</option>
+                            <option>Bronze Tier</option>
+                        </select>
+                        <select
+                            class="bg-surface-container-lowest border border-outline-variant text-on-surface font-body-sm text-body-sm rounded-DEFAULT py-unit px-sm h-10 focus:ring-secondary focus:border-secondary outline-none cursor-pointer">
+                            <option>Status: All</option>
+                            <option>Active</option>
+                            <option>Inactive</option>
+                        </select>
+                        <button
+                            class="bg-surface-container-lowest border border-outline-variant hover:bg-surface-container-low text-on-surface font-body-sm text-body-sm py-unit px-sm rounded-DEFAULT h-10 flex items-center gap-xs transition-colors">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">filter_list</span>
+                            More
+                        </button>
+                    </div>
+                </div>
+                <!-- The Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead
+                            class="bg-surface-variant text-on-surface-variant font-label-caps text-label-caps uppercase tracking-wider border-b border-outline-variant">
+                            <tr>
+                                <th class="px-md py-sm font-semibold">Customer &amp; ID</th>
+                                <th class="px-md py-sm font-semibold">Contact Details</th>
+                                <th class="px-md py-sm font-semibold">Region</th>
+                                <th class="px-md py-sm font-semibold text-right">Balance</th>
+                                <th class="px-md py-sm font-semibold text-center">Orders</th>
+                                <th class="px-md py-sm font-semibold text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-outline-variant bg-surface-container-lowest">
+                            <!-- Row 1 -->
+                            <tr class="hover:bg-surface-container-low transition-colors group cursor-pointer">
+                                <td class="px-md py-sm">
+                                    <div class="font-body-md text-body-md font-bold text-on-surface">Apex Industries
+                                    </div>
+                                    <div class="font-data-mono text-body-sm text-on-surface-variant">CUST-8291</div>
+                                </td>
+                                <td class="px-md py-sm">
+                                    <div class="font-body-sm text-body-sm text-on-surface">Sarah Jenkins</div>
+                                    <div class="font-body-sm text-body-sm text-on-surface-variant">555-0192-88</div>
+                                </td>
+                                <td class="px-md py-sm font-body-sm text-body-sm text-on-surface">Seattle, WA</td>
+                                <td class="px-md py-sm font-data-mono text-data-mono text-right text-on-surface">
+                                    $12,450.00
+                                </td>
+                                <td
+                                    class="px-md py-sm font-data-mono text-data-mono text-center text-on-surface-variant">
+                                    142</td>
+                                <td class="px-md py-sm text-center">
+                                    <div
+                                        class="flex items-center justify-center gap-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <button
+                                            class="text-on-surface-variant hover:text-secondary p-unit rounded hover:bg-surface-variant transition-colors"
+                                            title="Edit">
+                                            <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+                                        </button>
+                                        <button
+                                            class="text-on-surface-variant hover:text-secondary p-unit rounded hover:bg-surface-variant transition-colors"
+                                            title="View Profile">
+                                            <span class="material-symbols-outlined"
+                                                style="font-size: 18px;">visibility</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Row 2 -->
+                            <tr class="hover:bg-surface-container-low transition-colors group cursor-pointer">
+                                <td class="px-md py-sm">
+                                    <div class="font-body-md text-body-md font-bold text-on-surface">B&amp;B
+                                        Manufacturing</div>
+                                    <div class="font-data-mono text-body-sm text-on-surface-variant">CUST-4432</div>
+                                </td>
+                                <td class="px-md py-sm">
+                                    <div class="font-body-sm text-body-sm text-on-surface">Marcus Cole</div>
+                                    <div class="font-body-sm text-body-sm text-on-surface-variant">555-0833-21</div>
+                                </td>
+                                <td class="px-md py-sm font-body-sm text-body-sm text-on-surface">Portland, OR</td>
+                                <td
+                                    class="px-md py-sm font-data-mono text-data-mono text-right text-on-surface-variant">
+                                    $0.00
+                                </td>
+                                <td
+                                    class="px-md py-sm font-data-mono text-data-mono text-center text-on-surface-variant">
+                                    85</td>
+                                <td class="px-md py-sm text-center">
+                                    <div
+                                        class="flex items-center justify-center gap-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <button
+                                            class="text-on-surface-variant hover:text-secondary p-unit rounded hover:bg-surface-variant transition-colors"
+                                            title="Edit">
+                                            <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+                                        </button>
+                                        <button
+                                            class="text-on-surface-variant hover:text-secondary p-unit rounded hover:bg-surface-variant transition-colors"
+                                            title="View Profile">
+                                            <span class="material-symbols-outlined"
+                                                style="font-size: 18px;">visibility</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Row 3 (High Balance Highlight) -->
+                            <tr
+                                class="hover:bg-surface-container-low transition-colors group cursor-pointer bg-error-container/10">
+                                <td class="px-md py-sm">
+                                    <div class="font-body-md text-body-md font-bold text-on-surface">Horizon Tech
+                                        Logistics</div>
+                                    <div class="font-data-mono text-body-sm text-on-surface-variant">CUST-9921</div>
+                                </td>
+                                <td class="px-md py-sm">
+                                    <div class="font-body-sm text-body-sm text-on-surface">Lin Chen</div>
+                                    <div class="font-body-sm text-body-sm text-on-surface-variant">555-1204-99</div>
+                                </td>
+                                <td class="px-md py-sm font-body-sm text-body-sm text-on-surface">San Jose, CA</td>
+                                <td
+                                    class="px-md py-sm font-data-mono text-data-mono text-right text-error font-bold flex items-center justify-end gap-xs">
+                                    <span class="material-symbols-outlined" style="font-size: 16px;">warning</span>
+                                    $45,800.00
+                                </td>
+                                <td
+                                    class="px-md py-sm font-data-mono text-data-mono text-center text-on-surface-variant">
+                                    12</td>
+                                <td class="px-md py-sm text-center">
+                                    <div
+                                        class="flex items-center justify-center gap-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <button
+                                            class="text-on-surface-variant hover:text-secondary p-unit rounded hover:bg-surface-variant transition-colors"
+                                            title="Edit">
+                                            <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+                                        </button>
+                                        <button
+                                            class="text-on-surface-variant hover:text-secondary p-unit rounded hover:bg-surface-variant transition-colors"
+                                            title="View Profile">
+                                            <span class="material-symbols-outlined"
+                                                style="font-size: 18px;">visibility</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Row 4 -->
+                            <tr class="hover:bg-surface-container-low transition-colors group cursor-pointer">
+                                <td class="px-md py-sm">
+                                    <div class="font-body-md text-body-md font-bold text-on-surface">Summit Auto Parts
+                                    </div>
+                                    <div class="font-data-mono text-body-sm text-on-surface-variant">CUST-1105</div>
+                                </td>
+                                <td class="px-md py-sm">
+                                    <div class="font-body-sm text-body-sm text-on-surface">Dave Roberts</div>
+                                    <div class="font-body-sm text-body-sm text-on-surface-variant">555-9921-00</div>
+                                </td>
+                                <td class="px-md py-sm font-body-sm text-body-sm text-on-surface">Denver, CO</td>
+                                <td class="px-md py-sm font-data-mono text-data-mono text-right text-on-surface">
+                                    $4,200.00
+                                </td>
+                                <td
+                                    class="px-md py-sm font-data-mono text-data-mono text-center text-on-surface-variant">
+                                    4</td>
+                                <td class="px-md py-sm text-center">
+                                    <div
+                                        class="flex items-center justify-center gap-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <button
+                                            class="text-on-surface-variant hover:text-secondary p-unit rounded hover:bg-surface-variant transition-colors"
+                                            title="Edit">
+                                            <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+                                        </button>
+                                        <button
+                                            class="text-on-surface-variant hover:text-secondary p-unit rounded hover:bg-surface-variant transition-colors"
+                                            title="View Profile">
+                                            <span class="material-symbols-outlined"
+                                                style="font-size: 18px;">visibility</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Row 5 -->
+                            <tr class="hover:bg-surface-container-low transition-colors group cursor-pointer">
+                                <td class="px-md py-sm">
+                                    <div class="font-body-md text-body-md font-bold text-on-surface">Velocity Fleet
+                                        Services</div>
+                                    <div class="font-data-mono text-body-sm text-on-surface-variant">CUST-6744</div>
+                                </td>
+                                <td class="px-md py-sm">
+                                    <div class="font-body-sm text-body-sm text-on-surface">Amanda Torres</div>
+                                    <div class="font-body-sm text-body-sm text-on-surface-variant">555-3341-22</div>
+                                </td>
+                                <td class="px-md py-sm font-body-sm text-body-sm text-on-surface">Chicago, IL</td>
+                                <td class="px-md py-sm font-data-mono text-data-mono text-right text-on-surface">
+                                    $8,900.50
+                                </td>
+                                <td
+                                    class="px-md py-sm font-data-mono text-data-mono text-center text-on-surface-variant">
+                                    215</td>
+                                <td class="px-md py-sm text-center">
+                                    <div
+                                        class="flex items-center justify-center gap-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <button
+                                            class="text-on-surface-variant hover:text-secondary p-unit rounded hover:bg-surface-variant transition-colors"
+                                            title="Edit">
+                                            <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+                                        </button>
+                                        <button
+                                            class="text-on-surface-variant hover:text-secondary p-unit rounded hover:bg-surface-variant transition-colors"
+                                            title="View Profile">
+                                            <span class="material-symbols-outlined"
+                                                style="font-size: 18px;">visibility</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Table Pagination/Footer -->
+                <div class="p-md border-t border-outline-variant bg-surface flex justify-between items-center">
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">Showing 1 to 5 of 1,248
+                        entries</span>
+                    <div class="flex items-center gap-sm">
+                        <button
+                            class="p-unit rounded border border-outline-variant text-on-surface-variant hover:bg-surface-container-high transition-colors disabled:opacity-50"
+                            disabled="">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">chevron_left</span>
+                        </button>
+                        <button
+                            class="w-8 h-8 rounded bg-secondary text-on-secondary font-body-sm text-body-sm flex items-center justify-center">1</button>
+                        <button
+                            class="w-8 h-8 rounded hover:bg-surface-container-high text-on-surface font-body-sm text-body-sm flex items-center justify-center transition-colors">2</button>
+                        <button
+                            class="w-8 h-8 rounded hover:bg-surface-container-high text-on-surface font-body-sm text-body-sm flex items-center justify-center transition-colors">3</button>
+                        <span class="text-on-surface-variant">...</span>
+                        <button
+                            class="w-8 h-8 rounded hover:bg-surface-container-high text-on-surface font-body-sm text-body-sm flex items-center justify-center transition-colors">250</button>
+                        <button
+                            class="p-unit rounded border border-outline-variant text-on-surface hover:bg-surface-container-high transition-colors">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'bottom_nav_bar.html' %}
+    </main>
+
+{% endblock %}

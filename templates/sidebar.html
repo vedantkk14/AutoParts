@@ -1,0 +1,135 @@
+<style>
+    /* Collapsible Sidebar Styles */
+    .sidebar-text {
+        transition: max-width 0.3s ease, opacity 0.3s ease;
+        max-width: 150px;
+        opacity: 1;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    #sidebar.is-collapsed .sidebar-text {
+        max-width: 0;
+        opacity: 0;
+    }
+
+    #sidebar-title {
+        transition: max-width 0.3s ease, opacity 0.3s ease;
+        max-width: 150px;
+        opacity: 1;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    #sidebar.is-collapsed #sidebar-title {
+        max-width: 0;
+        opacity: 0;
+    }
+
+    .sidebar-link {
+        transition: padding 0.3s ease, gap 0.3s ease, background-color 0.2s, color 0.2s;
+    }
+
+    #sidebar.is-collapsed .sidebar-link {
+        padding-left: 0;
+        padding-right: 0;
+        justify-content: center;
+        gap: 0;
+    }
+
+    .export-btn-text {
+        transition: max-width 0.3s ease, opacity 0.3s ease;
+        max-width: 120px;
+        opacity: 1;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    #sidebar.is-collapsed .export-btn-text {
+        max-width: 0;
+        opacity: 0;
+    }
+
+    #sidebar.is-collapsed .export-btn {
+        padding-left: 0;
+        padding-right: 0;
+        width: 3rem;
+        height: 3rem;
+        margin-left: auto;
+        margin-right: auto;
+        gap: 0;
+        justify-content: center;
+    }
+</style>
+
+<!-- Desktop SideNavBar -->
+<aside
+    class="hidden md:flex flex-col h-screen fixed left-0 top-0 py-lg px-md shadow-sm bg-surface-container-low w-64 border-r border-outline-variant transition-all duration-300 overflow-hidden z-50"
+    id="sidebar">
+    <div class="flex items-center justify-between mb-lg">
+        <span class="font-headline-md text-primary" id="sidebar-title">Admin Portal</span>
+        <button
+            class="p-1 rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant flex items-center justify-center flex-shrink-0"
+            id="sidebar-toggle">
+            <span class="material-symbols-outlined" data-icon="menu">menu</span>
+        </button>
+    </div>
+    <nav class="flex-1 space-y-unit">
+        <!-- Dashboard -->
+        <a class="sidebar-link flex items-center gap-md px-md py-sm {% if request.resolver_match.url_name == 'dashboard' %}bg-secondary-container text-on-secondary-container rounded-lg font-semibold{% else %}text-on-surface-variant hover:bg-surface-container-high hover:translate-x-1{% endif %}"
+            href="{% url 'dashboard' %}">
+            <span class="material-symbols-outlined flex-shrink-0" data-icon="dashboard">dashboard</span>
+            <span class="sidebar-text font-body-md text-body-md">Dashboard</span>
+        </a>
+        <!-- Inventory -->
+        <a class="sidebar-link flex items-center gap-md px-md py-sm {% if request.resolver_match.url_name == 'view_inventory' or request.resolver_match.url_name == 'add_inventory' %}bg-secondary-container text-on-secondary-container rounded-lg font-semibold{% else %}text-on-surface-variant hover:bg-surface-container-high hover:translate-x-1{% endif %}"
+            href="{% url 'view_inventory' %}">
+            <span class="material-symbols-outlined flex-shrink-0" data-icon="inventory_2">inventory_2</span>
+            <span class="sidebar-text font-body-md text-body-md">Inventory</span>
+        </a>
+        <!-- Orders -->
+        <a class="sidebar-link flex items-center gap-md px-md py-sm {% if request.resolver_match.url_name == 'all_orders' %}bg-secondary-container text-on-secondary-container rounded-lg font-semibold{% else %}text-on-surface-variant hover:bg-surface-container-high hover:translate-x-1{% endif %}"
+            href="{% url 'all_orders' %}">
+            <span class="material-symbols-outlined flex-shrink-0" data-icon="receipt_long">receipt_long</span>
+            <span class="sidebar-text font-body-md text-body-md">Orders</span>
+        </a>
+        <!-- Customers -->
+        <a class="sidebar-link flex items-center gap-md px-md py-sm {% if request.resolver_match.url_name == 'view_customers' or request.resolver_match.url_name == 'create_customer' %}bg-secondary-container text-on-secondary-container rounded-lg font-semibold{% else %}text-on-surface-variant hover:bg-surface-container-high hover:translate-x-1{% endif %}"
+            href="{% url 'view_customers' %}">
+            <span class="material-symbols-outlined flex-shrink-0" data-icon="group">group</span>
+            <span class="sidebar-text font-body-md text-body-md">Customers</span>
+        </a>
+        <!-- Analytics -->
+        <a class="sidebar-link flex items-center gap-md px-md py-sm {% if request.resolver_match.url_name == 'view_analytics' %}bg-secondary-container text-on-secondary-container rounded-lg font-semibold{% else %}text-on-surface-variant hover:bg-surface-container-high hover:translate-x-1{% endif %}"
+            href="{% url 'view_analytics' %}">
+            <span class="material-symbols-outlined flex-shrink-0" data-icon="analytics">analytics</span>
+            <span class="sidebar-text font-body-md text-body-md">Analytics</span>
+        </a>
+    </nav>
+    <button
+        class="export-btn mt-auto bg-primary text-on-primary py-md px-lg rounded-lg font-bold flex items-center justify-center gap-sm active:brightness-95 transition-all">
+        <span class="material-symbols-outlined flex-shrink-0" data-icon="export_notes">export_notes</span>
+        <span class="export-btn-text">Quick Export</span>
+    </button>
+</aside>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const mainContent = document.getElementById('main-content');
+
+        if (toggleBtn && sidebar) {
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('w-64');
+                sidebar.classList.toggle('w-20');
+                sidebar.classList.toggle('is-collapsed');
+
+                if (mainContent) {
+                    mainContent.classList.toggle('md:ml-64');
+                    mainContent.classList.toggle('md:ml-20');
+                }
+            });
+        }
+    });
+</script>

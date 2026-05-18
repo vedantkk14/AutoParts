@@ -1,0 +1,427 @@
+{% extends 'base.html' %}
+{% block head %}
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#213145",
+                        "tertiary-container": "#402600",
+                        "on-background": "#0b1c30",
+                        "on-primary-container": "#8293ba",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "surface-bright": "#f8f9ff",
+                        "secondary-fixed-dim": "#b4c5ff",
+                        "secondary": "#0051d5",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-primary-fixed-variant": "#364669",
+                        "tertiary-fixed": "#ffddb8",
+                        "primary-fixed-dim": "#b6c6f0",
+                        "background": "#f8f9ff",
+                        "on-surface-variant": "#44474e",
+                        "surface-variant": "#d3e4fe",
+                        "on-error": "#ffffff",
+                        "primary": "#031636",
+                        "primary-container": "#1a2b4c",
+                        "secondary-fixed": "#dbe1ff",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#b6c6f0",
+                        "surface-container-high": "#dce9ff",
+                        "on-primary-fixed": "#071b3b",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#cd8300",
+                        "on-secondary-fixed-variant": "#003ea8",
+                        "surface-dim": "#cbdbf5",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#75777f",
+                        "inverse-on-surface": "#eaf1ff",
+                        "outline-variant": "#c5c6cf",
+                        "on-secondary-container": "#fefcff",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#241300",
+                        "secondary-container": "#316bf3",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#e5eeff",
+                        "on-secondary-fixed": "#00174b",
+                        "surface-tint": "#4e5e82",
+                        "surface-container-low": "#eff4ff",
+                        "surface": "#f8f9ff",
+                        "on-surface": "#0b1c30",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#2a1700"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "sm": "8px",
+                        "unit": "4px",
+                        "lg": "24px",
+                        "margin-desktop": "32px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "gutter": "16px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "data-mono": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .shadow-soft {
+            box-shadow: 0 4px 12px rgba(26, 43, 76, 0.05);
+        }
+    </style>
+    
+{% endblock %}
+
+{% block body_class %}bg-background text-on-background min-h-screen{% endblock %}
+
+{% block content %}
+    <!-- Desktop SideNavBar -->
+    {% include 'sidebar.html' %}
+    <!-- Main Canvas -->
+    <main class="md:ml-64 pb-32 md:pb-lg transition-all duration-300" id="main-content">
+        <!-- TopAppBar -->
+        {% include 'top_app_bar.html' %}
+        <!-- Content Body -->
+        <div class="px-margin-mobile md:px-margin-desktop py-lg">
+            <!-- Summary Grid -->
+            <section class="grid grid-cols-2 lg:grid-cols-6 gap-gutter mb-xl">
+                <div
+                    class="bg-surface-container-lowest p-md rounded-xl shadow-soft border border-outline-variant flex flex-col justify-between">
+                    <span class="text-on-surface-variant font-body-sm text-body-sm">Total Orders</span>
+                    <div class="flex items-baseline justify-between mt-sm">
+                        <span class="font-headline-sm text-headline-sm text-primary">1,284</span>
+                        <span class="text-emerald-600 font-data-mono text-xs">+12%</span>
+                    </div>
+                </div>
+                <div
+                    class="bg-surface-container-lowest p-md rounded-xl shadow-soft border border-outline-variant flex flex-col justify-between">
+                    <span class="text-on-surface-variant font-body-sm text-body-sm">Daily Sales</span>
+                    <div class="flex items-baseline justify-between mt-sm">
+                        <span class="font-headline-sm text-headline-sm text-primary">$42.5k</span>
+                        <span class="text-emerald-600 font-data-mono text-xs">+8%</span>
+                    </div>
+                </div>
+                <div
+                    class="bg-surface-container-lowest p-md rounded-xl shadow-soft border border-outline-variant flex flex-col justify-between">
+                    <span class="text-on-surface-variant font-body-sm text-body-sm">Pending</span>
+                    <div class="flex items-baseline justify-between mt-sm">
+                        <span class="font-headline-sm text-headline-sm text-primary">24</span>
+                        <span class="text-outline font-data-mono text-xs">Orders</span>
+                    </div>
+                </div>
+                <div
+                    class="bg-surface-container-lowest p-md rounded-xl shadow-soft border border-outline-variant flex flex-col justify-between">
+                    <span class="text-on-surface-variant font-body-sm text-body-sm">Low Stock</span>
+                    <div class="flex items-baseline justify-between mt-sm">
+                        <span class="font-headline-sm text-headline-sm text-error">12</span>
+                        <span class="text-error font-data-mono text-xs">SKUs</span>
+                    </div>
+                </div>
+                <div
+                    class="bg-surface-container-lowest p-md rounded-xl shadow-soft border border-outline-variant flex flex-col justify-between">
+                    <span class="text-on-surface-variant font-body-sm text-body-sm">Fast Moving</span>
+                    <div class="flex items-baseline justify-between mt-sm">
+                        <span class="font-headline-sm text-headline-sm text-primary">Brakes</span>
+                        <span class="text-outline font-data-mono text-xs">Top</span>
+                    </div>
+                </div>
+                <div
+                    class="bg-surface-container-lowest p-md rounded-xl shadow-soft border border-outline-variant flex flex-col justify-between">
+                    <span class="text-on-surface-variant font-body-sm text-body-sm">Customers</span>
+                    <div class="flex items-baseline justify-between mt-sm">
+                        <span class="font-headline-sm text-headline-sm text-primary">312</span>
+                        <span class="text-emerald-600 font-data-mono text-xs">+2</span>
+                    </div>
+                </div>
+            </section>
+            <!-- Main Asymmetric Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+                <!-- Left Column: Quick Actions & Order Tracker -->
+                <div class="lg:col-span-8 space-y-xl">
+                    <!-- Quick Actions Grid -->
+                    <section>
+                        <h2 class="font-headline-sm text-headline-sm mb-md text-primary">Quick Actions</h2>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-md">
+                            <!-- Action Cards -->
+                            <button
+                                class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-soft flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-colors group">
+                                <span
+                                    class="material-symbols-outlined text-secondary text-3xl group-hover:scale-110 transition-transform"
+                                    data-icon="search">search</span>
+                                <span class="font-body-md text-body-md font-bold text-center">Search Parts</span>
+                            </button>
+                            <a href="{% url 'add_order' %}"
+                                class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-soft flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-colors group">
+                                <span
+                                    class="material-symbols-outlined text-secondary text-3xl group-hover:scale-110 transition-transform"
+                                    data-icon="add_shopping_cart">add_shopping_cart</span>
+                                <span class="font-body-md text-body-md font-bold text-center">Add Order</span>
+                            </a>
+                            <a href="{% url 'add_inventory' %}"
+                                class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-soft flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-colors group">
+                                <span
+                                    class="material-symbols-outlined text-secondary text-3xl group-hover:scale-110 transition-transform"
+                                    data-icon="add_inventory">box_add</span>
+                                <span class="font-body-md text-body-md font-bold text-center">Add Inventory</span>
+                            </a>
+                            <a href="{% url 'create_customer' %}"
+                                class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-soft flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-colors group">
+                                <span
+                                    class="material-symbols-outlined text-secondary text-3xl group-hover:scale-110 transition-transform"
+                                    data-icon="person_add">person_add</span>
+                                <span class="font-body-md text-body-md font-bold text-center">New Client</span>
+                            </a>
+                            <!-- <button
+                                class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-soft flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-colors group">
+                                <span
+                                    class="material-symbols-outlined text-secondary text-3xl group-hover:scale-110 transition-transform"
+                                    data-icon="lab_profile">lab_profile</span>
+                                <span class="font-body-md text-body-md font-bold text-center">Gen Report</span>
+                            </button>  -->
+                            <!-- <button
+                                class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-soft flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-colors group">
+                                <span
+                                    class="material-symbols-outlined text-secondary text-3xl group-hover:scale-110 transition-transform"
+                                    data-icon="local_shipping">local_shipping</span>
+                                <span class="font-body-md text-body-md font-bold text-center">Logistics</span>
+                            </button> -->
+                            <!-- <button
+                                class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-soft flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-colors group">
+                                <span
+                                    class="material-symbols-outlined text-secondary text-3xl group-hover:scale-110 transition-transform"
+                                    data-icon="barcode_scanner">barcode_scanner</span>
+                                <span class="font-body-md text-body-md font-bold text-center">Scan Part</span>
+                            </button> -->
+                            <button
+                                class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-soft flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-colors group">
+                                <span
+                                    class="material-symbols-outlined text-secondary text-3xl group-hover:scale-110 transition-transform"
+                                    data-icon="print">print</span>
+                                <span class="font-body-md text-body-md font-bold text-center">Batch Print</span>
+                            </button>
+                            <!-- <button
+                                class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-soft flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-colors group">
+                                <span
+                                    class="material-symbols-outlined text-secondary text-3xl group-hover:scale-110 transition-transform"
+                                    data-icon="inventory">inventory</span>
+                                <span class="font-body-md text-body-md font-bold text-center">Catalog</span>
+                            </button> -->
+                            <!-- <button
+                                class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-soft flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-colors group">
+                                <span
+                                    class="material-symbols-outlined text-secondary text-3xl group-hover:scale-110 transition-transform"
+                                    data-icon="settings">settings</span>
+                                <span class="font-body-md text-body-md font-bold text-center">System Config</span>
+                            </button> -->
+                        </div>
+                    </section>
+                    <!-- Order Status Tracker -->
+                    <section
+                        class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-soft overflow-hidden">
+                        <div class="px-lg py-md border-b border-outline-variant flex justify-between items-center">
+                            <h2 class="font-headline-sm text-headline-sm text-primary">Recent Orders</h2>
+                            <button class="text-secondary font-body-md text-body-md font-bold hover:underline">View
+                                All</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead class="bg-surface-container-low">
+                                    <tr>
+                                        <th class="px-lg py-md font-label-caps text-label-caps text-on-surface-variant">
+                                            Order ID</th>
+                                        <th class="px-lg py-md font-label-caps text-label-caps text-on-surface-variant">
+                                            Customer</th>
+                                        <th class="px-lg py-md font-label-caps text-label-caps text-on-surface-variant">
+                                            Amount</th>
+                                        <th class="px-lg py-md font-label-caps text-label-caps text-on-surface-variant">
+                                            Status</th>
+                                        <th class="px-lg py-md font-label-caps text-label-caps text-on-surface-variant">
+                                            Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-outline-variant">
+                                    <tr>
+                                        <td class="px-lg py-md font-data-mono text-body-md text-primary">#ORD-7721</td>
+                                        <td class="px-lg py-md font-body-md text-body-md">Precision Auto Care</td>
+                                        <td class="px-lg py-md font-data-mono text-body-md">$1,240.00</td>
+                                        <td class="px-lg py-md">
+                                            <span
+                                                class="px-sm py-xs rounded-full bg-surface-container text-on-surface-variant font-label-caps text-label-caps">Pending</span>
+                                        </td>
+                                        <td class="px-lg py-md"><span
+                                                class="material-symbols-outlined text-outline cursor-pointer"
+                                                data-icon="visibility">visibility</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-lg py-md font-data-mono text-body-md text-primary">#ORD-7720</td>
+                                        <td class="px-lg py-md font-body-md text-body-md">Grand City Motors</td>
+                                        <td class="px-lg py-md font-data-mono text-body-md">$850.50</td>
+                                        <td class="px-lg py-md">
+                                            <span
+                                                class="px-sm py-xs rounded-full bg-surface-container-highest text-secondary-container font-label-caps text-label-caps">Packed</span>
+                                        </td>
+                                        <td class="px-lg py-md"><span
+                                                class="material-symbols-outlined text-outline cursor-pointer"
+                                                data-icon="visibility">visibility</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-lg py-md font-data-mono text-body-md text-primary">#ORD-7719</td>
+                                        <td class="px-lg py-md font-body-md text-body-md">Apex Logistics</td>
+                                        <td class="px-lg py-md font-data-mono text-body-md">$2,100.00</td>
+                                        <td class="px-lg py-md">
+                                            <span
+                                                class="px-sm py-xs rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-caps text-label-caps">Shipped</span>
+                                        </td>
+                                        <td class="px-lg py-md"><span
+                                                class="material-symbols-outlined text-outline cursor-pointer"
+                                                data-icon="visibility">visibility</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-lg py-md font-data-mono text-body-md text-primary">#ORD-7718</td>
+                                        <td class="px-lg py-md font-body-md text-body-md">Elite Body Shop</td>
+                                        <td class="px-lg py-md font-data-mono text-body-md">$435.00</td>
+                                        <td class="px-lg py-md">
+                                            <span
+                                                class="px-sm py-xs rounded-full bg-green-100 text-green-700 font-label-caps text-label-caps">Delivered</span>
+                                        </td>
+                                        <td class="px-lg py-md"><span
+                                                class="material-symbols-outlined text-outline cursor-pointer"
+                                                data-icon="visibility">visibility</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+                <!-- Right Column: Analytics & Inventory Highlights -->
+                <div class="lg:col-span-4 space-y-xl">
+                    <!-- Sales Analytics Preview -->
+                    <section class="bg-primary text-on-primary p-lg rounded-xl shadow-soft h-fit">
+                        <div class="flex justify-between items-center mb-lg">
+                            <h2 class="font-headline-sm text-headline-sm">Sales Trend</h2>
+                            <span class="material-symbols-outlined text-on-primary-container"
+                                data-icon="trending_up">trending_up</span>
+                        </div>
+                        <div class="h-32 flex items-end justify-between gap-unit mb-md">
+                            <div class="w-full bg-on-primary-container h-8 rounded-t"></div>
+                            <div class="w-full bg-on-primary-container h-12 rounded-t"></div>
+                            <div class="w-full bg-on-primary-container h-16 rounded-t"></div>
+                            <div class="w-full bg-on-primary-container h-10 rounded-t"></div>
+                            <div class="w-full bg-secondary-container h-24 rounded-t"></div>
+                            <div class="w-full bg-on-primary-container h-20 rounded-t"></div>
+                            <div class="w-full bg-on-primary-container h-28 rounded-t"></div>
+                        </div>
+                        <div class="flex justify-between font-label-caps text-label-caps text-on-primary-container">
+                            <span>MON</span>
+                            <span>TUE</span>
+                            <span>WED</span>
+                            <span>THU</span>
+                            <span>FRI</span>
+                            <span>SAT</span>
+                            <span>SUN</span>
+                        </div>
+                        <div class="mt-lg pt-lg border-t border-primary-container">
+                            <p class="text-body-sm font-body-sm opacity-80 mb-xs">Forecasted Revenue</p>
+                            <p class="text-headline-md font-headline-md">$285,000.00</p>
+                        </div>
+                    </section>
+                    <!-- Low Stock Alerts -->
+                    <section
+                        class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-soft overflow-hidden">
+                        <div class="px-lg py-md border-b border-outline-variant bg-surface-container-low">
+                            <h2 class="font-headline-sm text-headline-sm text-primary flex items-center gap-sm">
+                                <span class="material-symbols-outlined text-error" data-icon="warning">warning</span>
+                                Critical Stock
+                            </h2>
+                        </div>
+                        <div class="p-md space-y-md">
+                            <div
+                                class="flex items-center justify-between p-sm border border-error-container rounded-lg bg-error-container/10">
+                                <div class="flex flex-col">
+                                    <span class="font-body-md text-body-md font-bold text-primary">Ceramic Brake
+                                        Pads</span>
+                                    <span class="text-body-sm font-body-sm text-on-surface-variant">SKU: BRK-990</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="font-headline-sm text-headline-sm text-error">3</span>
+                                    <p class="text-label-caps text-label-caps text-error">REORDER</p>
+                                </div>
+                            </div>
+                            <div
+                                class="flex items-center justify-between p-sm border border-outline-variant rounded-lg">
+                                <div class="flex flex-col">
+                                    <span class="font-body-md text-body-md font-bold text-primary">Oil Filter
+                                        XL-4</span>
+                                    <span class="text-body-sm font-body-sm text-on-surface-variant">SKU: FIL-221</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="font-headline-sm text-headline-sm text-tertiary-container">8</span>
+                                    <p class="text-label-caps text-label-caps text-tertiary-container">LOW</p>
+                                </div>
+                            </div>
+                            <div
+                                class="flex items-center justify-between p-sm border border-outline-variant rounded-lg">
+                                <div class="flex flex-col">
+                                    <span class="font-body-md text-body-md font-bold text-primary">HID Headlamp</span>
+                                    <span class="text-body-sm font-body-sm text-on-surface-variant">SKU: LMP-882</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="font-headline-sm text-headline-sm text-tertiary-container">5</span>
+                                    <p class="text-label-caps text-label-caps text-tertiary-container">LOW</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- BottomNavBar (Mobile Only) -->
+    {% include 'bottom_nav_bar.html' %}
+{% endblock %}

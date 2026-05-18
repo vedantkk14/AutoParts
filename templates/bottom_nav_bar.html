@@ -1,0 +1,34 @@
+<!-- BottomNavBar (Mobile Only) -->
+<nav
+    class="fixed bottom-0 left-0 w-full flex justify-around items-center h-16 bg-surface border-t border-outline-variant shadow-lg md:hidden z-50">
+    <!-- Dashboard -->
+    <a class="flex flex-col items-center justify-center {% if request.resolver_match.url_name == 'dashboard' %}text-secondary-container font-bold scale-95 transition-transform{% else %}text-on-surface-variant hover:bg-surface-container-high transition-colors{% endif %}"
+        href="{% url 'dashboard' %}">
+        <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+        <span class="font-body-sm text-body-sm">Dashboard</span>
+    </a>
+    <!-- Inventory -->
+    <a class="flex flex-col items-center justify-center {% if request.resolver_match.url_name == 'view_inventory' or request.resolver_match.url_name == 'add_inventory' %}text-secondary-container font-bold scale-95 transition-transform{% else %}text-on-surface-variant hover:bg-surface-container-high transition-colors{% endif %}"
+        href="{% url 'view_inventory' %}">
+        <span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+        <span class="font-body-sm text-body-sm">Inventory</span>
+    </a>
+    <!-- Orders -->
+    <a class="flex flex-col items-center justify-center {% if request.resolver_match.url_name == 'all_orders' %}text-secondary-container font-bold scale-95 transition-transform{% else %}text-on-surface-variant hover:bg-surface-container-high transition-colors{% endif %}"
+        href="{% url 'all_orders' %}">
+        <span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+        <span class="font-body-sm text-body-sm">Orders</span>
+    </a>
+    <!-- Customers -->
+    <a class="flex flex-col items-center justify-center {% if request.resolver_match.url_name == 'view_customers' or request.resolver_match.url_name == 'create_customer' %}text-secondary-container font-bold scale-95 transition-transform{% else %}text-on-surface-variant hover:bg-surface-container-high transition-colors{% endif %}"
+        href="{% url 'view_customers' %}">
+        <span class="material-symbols-outlined" data-icon="group">group</span>
+        <span class="font-body-sm text-body-sm">Customers</span>
+    </a>
+    <!-- Analytics -->
+    <a class="flex flex-col items-center justify-center {% if request.resolver_match.url_name == 'view_analytics' %}bg-secondary-container text-on-secondary-container rounded-lg font-semibold{% else %}text-on-surface-variant hover:bg-surface-container-high transition-colors{% endif %}"
+        href="{% url 'view_analytics' %}">
+        <span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+        <span class="font-body-sm text-body-sm">Analytics</span>
+    </a>
+</nav>
