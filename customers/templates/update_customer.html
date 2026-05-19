@@ -7,9 +7,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -131,7 +128,7 @@
                 <!-- Back Button -->
                 <div class="flex items-center gap-1 text-on-surface-variant">
                     <span class="material-symbols-outlined text-[18px] text-outline">arrow_back</span>
-                    <a class="text-body-sm font-body-sm hover:underline hover:text-primary transition-colors font-medium" href="{% url 'dashboard' %}">Back to Dashboard</a>
+                    <a class="text-body-sm font-body-sm hover:underline hover:text-primary transition-colors font-medium" href="{% url 'view_customers' %}">Back to Customers</a>
                 </div>
                 <!-- Form Card -->
                 <div
@@ -139,13 +136,12 @@
                 <!-- Card Header -->
                 <div class="px-lg py-md border-b border-outline-variant bg-surface-bright flex items-center gap-md">
                     <div
-                        class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
-                        <span class="material-symbols-outlined text-[20px]">domain_add</span>
+                        class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary">
+                        <span class="material-symbols-outlined text-[20px]">edit</span>
                     </div>
                     <div>
-                        <h2 class="text-headline-sm font-headline-sm text-on-surface">Add New Client</h2>
-                        <p class="text-body-sm font-body-sm text-on-surface-variant">Enter business details to register
-                            a new wholesale account.</p>
+                        <h2 class="text-headline-sm font-headline-sm text-on-surface">Update Client Details</h2>
+                        <p class="text-body-sm font-body-sm text-on-surface-variant">Modify the business details for this wholesale account.</p>
                     </div>
                 </div>
                  <!-- Messages Modal Popup -->
@@ -252,7 +248,7 @@
                                      customer_company_name: formData.get('customer_company_name'),
                                      customer_name: formData.get('customer_name'),
                                      customer_phone_number: formData.get('customer_phone_number'),
-                                     customer_city: formData.get('customer_city'),
+                                     customer_city: formData.get('customer_city')
                                  };
 
                                  try {
@@ -267,7 +263,7 @@
 
                                      const result = await response.json();
                                      if (response.ok && result.status === 'success') {
-                                         showModal('Success', 'Customer created successfully.', false, "{% url 'view_customers' %}");
+                                         showModal('Success', 'Customer updated successfully.', false, "{% url 'view_customers' %}");
                                      } else {
                                          showModal('Error', result.message || 'An error occurred.', true);
                                      }
@@ -292,7 +288,7 @@
                             </label>
                             <input
                                 class="w-full px-md py-sm bg-surface-container-low border border-outline-variant rounded-DEFAULT text-body-md font-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors"
-                                id="businessName" name="customer_company_name"  placeholder="e.g. Apex Auto Parts" required type="text" />
+                                id="businessName" name="customer_company_name" value="{{ customer.customer_company_name }}" placeholder="e.g. Apex Auto Parts" required type="text" />
                         </div>
                         <!-- Primary Contact -->
                         <div class="flex flex-col gap-xs">
@@ -301,7 +297,7 @@
                             </label>
                             <input
                                 class="w-full px-md py-sm bg-surface-container-low border border-outline-variant rounded-DEFAULT text-body-md font-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors"
-                                id="contactPerson" name="customer_name" placeholder="e.g. Laxmikant G." type="text" />
+                                id="contactPerson" name="customer_name" value="{{ customer.customer_name }}" placeholder="Full Name" type="text" />
                         </div>
                         <!-- Phone Number -->
                         <div class="flex flex-col gap-xs">
@@ -311,9 +307,11 @@
                                 Phone Number 
                             </label>
                             <div class="relative">
+                                <span
+                                    class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">call</span>
                                 <input
                                     class="w-full pl-xl pr-md py-sm bg-surface-container-low border border-outline-variant rounded-DEFAULT text-body-md font-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors"
-                                    id="phone" name="customer_phone_number" maxlength="10" placeholder="e.g. 0123456789" type="tel" />
+                                    id="phone" name="customer_phone_number" value="{{ customer.customer_phone_number|default_if_none:'' }}" placeholder="(555) 000-0000" type="tel" />
                             </div>
                         </div>
                         <!-- City -->
@@ -323,8 +321,9 @@
                             </label>
                             <input
                                 class="w-full px-md py-sm bg-surface-container-low border border-outline-variant rounded-DEFAULT text-body-md font-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors"
-                                id="city" name="customer_city" placeholder="e.g. Solapur" type="text" />
+                                id="city" name="customer_city" value="{{ customer.customer_city }}" placeholder="City Name" type="text" />
                         </div>
+
                     </div>
                     <!-- Actions -->
                     <div class="mt-md pt-lg border-t border-outline-variant flex justify-end gap-md">
@@ -336,7 +335,7 @@
                             class="px-lg py-sm bg-primary text-on-primary rounded-DEFAULT text-body-md font-body-md font-semibold shadow-sm hover:opacity-90 transition-opacity flex items-center gap-sm"
                             type="submit">
                             <span class="material-symbols-outlined text-[18px]">save</span>
-                            Save Client
+                            Save Changes
                         </button>
                     </div>
                 </form>

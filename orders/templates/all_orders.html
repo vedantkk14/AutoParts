@@ -153,15 +153,17 @@
         </header>
         <!-- Order Entry Content -->
         <div class="flex-1 p-margin-mobile md:p-margin-desktop bg-background max-w-5xl mx-auto w-full">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-xl gap-md">
+            <!-- Page Header -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-md mb-lg">
                 <div>
-                    <h2 class="font-headline-md text-on-surface">Quick Order Entry</h2>
-                    <p class="text-on-surface-variant font-body-md">Drafting order for Suresh Auto Works</p>
+                    <h2 class="text-headline-md font-bold text-primary font-headline-md">Orders</h2>
+                    <p class="text-body-sm text-on-surface-variant font-body-sm">Manage, edit, and create customer wholesale orders</p>
                 </div>
-                <div class="bg-surface-container-highest px-md py-xs rounded-full flex items-center gap-sm">
-                    <span class="w-2 h-2 bg-secondary rounded-full"></span>
-                    <span class="font-label-caps text-on-surface-variant uppercase">New Draft #8492</span>
-                </div>
+                <a href="{% url 'add_order' %}"
+                    class="bg-secondary text-on-secondary px-md py-sm rounded-lg font-bold hover:brightness-95 active:scale-95 transition-all flex items-center gap-xs font-body-md shadow-sm hover:shadow-md">
+                    <span class="material-symbols-outlined text-md">add</span>
+                    Add Order
+                </a>
             </div>
             <!-- Header Section: Customer & Search -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter mb-xl">

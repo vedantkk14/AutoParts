@@ -26,10 +26,14 @@ from orders.views import *
 from inventory.views import *
 from customers.views import *
 from analytics.views import *
+from accounts.views import *
 
 urlpatterns = [
     path(route='', view=dashboard, name='dashboard'),
-    path(route='view_inventory/', view=view_inventory, name='view_inventory'),
+
+    #login section
+    path(route='login_page/', view=login_page, name='login_page'),
+    path(route='logout/', view=logout_view, name='logout'),
     
     #paths for orders section
     path(route='add_orders/', view=add_order, name='add_order'),
@@ -40,8 +44,12 @@ urlpatterns = [
     path(route='create_customer/', view=create_customer, name='create_customer'),
     path(route='view_customers/', view=view_customers, name='view_customers'),
 
+    path(route='customers/delete/<int:customer_id>/', view=delete_customer, name='delete_customer'),
+    path(route='customers/update/<int:customer_id>/', view=update_customer, name='update_customer'),
+
     #paths for inventory section
     path(route='add_inventory/', view=add_inventory, name='add_inventory'),
+    path(route='view_inventory/', view=view_inventory, name='view_inventory'),
 
     #paths for analytics section
     path(route='view_analytics/', view=view_analytics, name='view_analytics'),

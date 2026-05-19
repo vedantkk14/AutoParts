@@ -184,18 +184,18 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
                 <!-- Left Column: Quick Actions & Order Tracker -->
                 <div class="lg:col-span-8 space-y-xl">
-                    <!-- Quick Actions Grid -->
+                    <!-- Quick Actions Grid -->-
                     <section>
                         <h2 class="font-headline-sm text-headline-sm mb-md text-primary">Quick Actions</h2>
                         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-md">
                             <!-- Action Cards -->
-                            <button
+                            <a href="{% url 'view_inventory' %}"
                                 class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-soft flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-colors group">
                                 <span
                                     class="material-symbols-outlined text-secondary text-3xl group-hover:scale-110 transition-transform"
                                     data-icon="search">search</span>
                                 <span class="font-body-md text-body-md font-bold text-center">Search Parts</span>
-                            </button>
+                            </a>
                             <a href="{% url 'add_order' %}"
                                 class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-soft flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-colors group">
                                 <span
@@ -204,7 +204,7 @@
                                 <span class="font-body-md text-body-md font-bold text-center">Add Order</span>
                             </a>
                             <a href="{% url 'add_inventory' %}"
-                                class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-soft flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-colors group">
+                                class="bg-surface-container-lowest p-lg rounded-xl border borderoutline-variant shadow-soft flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-colors group">
                                 <span
                                     class="material-symbols-outlined text-secondary text-3xl group-hover:scale-110 transition-transform"
                                     data-icon="add_inventory">box_add</span>
@@ -215,7 +215,7 @@
                                 <span
                                     class="material-symbols-outlined text-secondary text-3xl group-hover:scale-110 transition-transform"
                                     data-icon="person_add">person_add</span>
-                                <span class="font-body-md text-body-md font-bold text-center">New Client</span>
+                                <span class="font-body-md text-body-md font-bold text-center">New Customer</span>
                             </a>
                             <!-- <button
                                 class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-soft flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-colors group">
@@ -245,13 +245,6 @@
                                     data-icon="print">print</span>
                                 <span class="font-body-md text-body-md font-bold text-center">Batch Print</span>
                             </button>
-                            <!-- <button
-                                class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-soft flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-colors group">
-                                <span
-                                    class="material-symbols-outlined text-secondary text-3xl group-hover:scale-110 transition-transform"
-                                    data-icon="inventory">inventory</span>
-                                <span class="font-body-md text-body-md font-bold text-center">Catalog</span>
-                            </button> -->
                             <!-- <button
                                 class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-soft flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-colors group">
                                 <span
