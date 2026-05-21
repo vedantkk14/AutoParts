@@ -135,23 +135,23 @@
                     class="bg-surface-container-lowest p-md rounded-xl shadow-soft border border-outline-variant flex flex-col justify-between">
                     <span class="text-on-surface-variant font-body-sm text-body-sm">Total Orders</span>
                     <div class="flex items-baseline justify-between mt-sm">
-                        <span class="font-headline-sm text-headline-sm text-primary">1,284</span>
-                        <span class="text-emerald-600 font-data-mono text-xs">+12%</span>
+                        <span class="font-headline-sm text-headline-sm text-primary">{{ total_orders }}</span>
+                        <span class="text-emerald-600 font-data-mono text-xs">+100%</span>
                     </div>
                 </div>
                 <div
                     class="bg-surface-container-lowest p-md rounded-xl shadow-soft border border-outline-variant flex flex-col justify-between">
                     <span class="text-on-surface-variant font-body-sm text-body-sm">Daily Sales</span>
                     <div class="flex items-baseline justify-between mt-sm">
-                        <span class="font-headline-sm text-headline-sm text-primary">$42.5k</span>
-                        <span class="text-emerald-600 font-data-mono text-xs">+8%</span>
+                        <span class="font-headline-sm text-headline-sm text-primary">₹{{ daily_sales|floatformat:2 }}</span>
+                        <span class="text-emerald-600 font-data-mono text-xs">+100%</span>
                     </div>
                 </div>
                 <div
                     class="bg-surface-container-lowest p-md rounded-xl shadow-soft border border-outline-variant flex flex-col justify-between">
                     <span class="text-on-surface-variant font-body-sm text-body-sm">Pending</span>
                     <div class="flex items-baseline justify-between mt-sm">
-                        <span class="font-headline-sm text-headline-sm text-primary">24</span>
+                        <span class="font-headline-sm text-headline-sm text-primary">{{ pending_orders }}</span>
                         <span class="text-outline font-data-mono text-xs">Orders</span>
                     </div>
                 </div>
@@ -159,7 +159,7 @@
                     class="bg-surface-container-lowest p-md rounded-xl shadow-soft border border-outline-variant flex flex-col justify-between">
                     <span class="text-on-surface-variant font-body-sm text-body-sm">Low Stock</span>
                     <div class="flex items-baseline justify-between mt-sm">
-                        <span class="font-headline-sm text-headline-sm text-error">12</span>
+                        <span class="font-headline-sm text-headline-sm text-error">{{ low_stock_count }}</span>
                         <span class="text-error font-data-mono text-xs">SKUs</span>
                     </div>
                 </div>
@@ -175,8 +175,8 @@
                     class="bg-surface-container-lowest p-md rounded-xl shadow-soft border border-outline-variant flex flex-col justify-between">
                     <span class="text-on-surface-variant font-body-sm text-body-sm">Customers</span>
                     <div class="flex items-baseline justify-between mt-sm">
-                        <span class="font-headline-sm text-headline-sm text-primary">312</span>
-                        <span class="text-emerald-600 font-data-mono text-xs">+2</span>
+                        <span class="font-headline-sm text-headline-sm text-primary">{{ total_customers }}</span>
+                        <span class="text-emerald-600 font-data-mono text-xs">+100%</span>
                     </div>
                 </div>
             </section>
@@ -238,13 +238,13 @@
                                     data-icon="barcode_scanner">barcode_scanner</span>
                                 <span class="font-body-md text-body-md font-bold text-center">Scan Part</span>
                             </button> -->
-                            <button
+                            <!-- <button
                                 class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-soft flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-colors group">
                                 <span
                                     class="material-symbols-outlined text-secondary text-3xl group-hover:scale-110 transition-transform"
                                     data-icon="print">print</span>
                                 <span class="font-body-md text-body-md font-bold text-center">Batch Print</span>
-                            </button>
+                            </button> -->
                             <!-- <button
                                 class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-soft flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-colors group">
                                 <span
@@ -259,8 +259,7 @@
                         class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-soft overflow-hidden">
                         <div class="px-lg py-md border-b border-outline-variant flex justify-between items-center">
                             <h2 class="font-headline-sm text-headline-sm text-primary">Recent Orders</h2>
-                            <button class="text-secondary font-body-md text-body-md font-bold hover:underline">View
-                                All</button>
+                            <a href="{% url 'all_orders' %}" class="text-secondary font-body-md text-body-md font-bold hover:underline">View All</a>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left">
@@ -279,54 +278,33 @@
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-outline-variant">
+                                    {% for order in recent_orders %}
                                     <tr>
-                                        <td class="px-lg py-md font-data-mono text-body-md text-primary">#ORD-7721</td>
-                                        <td class="px-lg py-md font-body-md text-body-md">Precision Auto Care</td>
-                                        <td class="px-lg py-md font-data-mono text-body-md">$1,240.00</td>
+                                        <td class="px-lg py-md font-data-mono text-body-md text-primary">#ORD-{{ order.id|stringformat:"05d" }}</td>
+                                        <td class="px-lg py-md font-body-md text-body-md">{{ order.customer.customer_company_name }}</td>
+                                        <td class="px-lg py-md font-data-mono text-body-md">₹{{ order.final_total|floatformat:2 }}</td>
                                         <td class="px-lg py-md">
-                                            <span
-                                                class="px-sm py-xs rounded-full bg-surface-container text-on-surface-variant font-label-caps text-label-caps">Pending</span>
+                                            {% if order.status == 'pending' %}
+                                            <span class="px-sm py-xs rounded-full bg-amber-100 text-amber-800 font-label-caps text-label-caps">Pending</span>
+                                            {% elif order.status == 'confirmed' %}
+                                            <span class="px-sm py-xs rounded-full bg-blue-100 text-blue-800 font-label-caps text-label-caps">Confirmed</span>
+                                            {% elif order.status == 'shipped' %}
+                                            <span class="px-sm py-xs rounded-full bg-indigo-100 text-indigo-800 font-label-caps text-label-caps">Shipped</span>
+                                            {% elif order.status == 'delivered' %}
+                                            <span class="px-sm py-xs rounded-full bg-emerald-100 text-emerald-800 font-label-caps text-label-caps">Delivered</span>
+                                            {% elif order.status == 'cancelled' %}
+                                            <span class="px-sm py-xs rounded-full bg-red-100 text-red-800 font-label-caps text-label-caps">Cancelled</span>
+                                            {% endif %}
                                         </td>
-                                        <td class="px-lg py-md"><span
-                                                class="material-symbols-outlined text-outline cursor-pointer"
-                                                data-icon="visibility">visibility</span></td>
+                                        <td class="px-lg py-md">
+                                            <a href="{% url 'all_orders' %}" class="material-symbols-outlined text-outline cursor-pointer hover:text-primary transition-colors" data-icon="visibility">visibility</a>
+                                        </td>
                                     </tr>
+                                    {% empty %}
                                     <tr>
-                                        <td class="px-lg py-md font-data-mono text-body-md text-primary">#ORD-7720</td>
-                                        <td class="px-lg py-md font-body-md text-body-md">Grand City Motors</td>
-                                        <td class="px-lg py-md font-data-mono text-body-md">$850.50</td>
-                                        <td class="px-lg py-md">
-                                            <span
-                                                class="px-sm py-xs rounded-full bg-surface-container-highest text-secondary-container font-label-caps text-label-caps">Packed</span>
-                                        </td>
-                                        <td class="px-lg py-md"><span
-                                                class="material-symbols-outlined text-outline cursor-pointer"
-                                                data-icon="visibility">visibility</span></td>
+                                        <td colspan="5" class="px-lg py-xl text-center text-on-surface-variant font-body-md">No recent orders</td>
                                     </tr>
-                                    <tr>
-                                        <td class="px-lg py-md font-data-mono text-body-md text-primary">#ORD-7719</td>
-                                        <td class="px-lg py-md font-body-md text-body-md">Apex Logistics</td>
-                                        <td class="px-lg py-md font-data-mono text-body-md">$2,100.00</td>
-                                        <td class="px-lg py-md">
-                                            <span
-                                                class="px-sm py-xs rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-caps text-label-caps">Shipped</span>
-                                        </td>
-                                        <td class="px-lg py-md"><span
-                                                class="material-symbols-outlined text-outline cursor-pointer"
-                                                data-icon="visibility">visibility</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-lg py-md font-data-mono text-body-md text-primary">#ORD-7718</td>
-                                        <td class="px-lg py-md font-body-md text-body-md">Elite Body Shop</td>
-                                        <td class="px-lg py-md font-data-mono text-body-md">$435.00</td>
-                                        <td class="px-lg py-md">
-                                            <span
-                                                class="px-sm py-xs rounded-full bg-green-100 text-green-700 font-label-caps text-label-caps">Delivered</span>
-                                        </td>
-                                        <td class="px-lg py-md"><span
-                                                class="material-symbols-outlined text-outline cursor-pointer"
-                                                data-icon="visibility">visibility</span></td>
-                                    </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -374,41 +352,24 @@
                             </h2>
                         </div>
                         <div class="p-md space-y-md">
-                            <div
-                                class="flex items-center justify-between p-sm border border-error-container rounded-lg bg-error-container/10">
+                            {% for item in critical_stock %}
+                            <div class="flex items-center justify-between p-sm border {% if item.initial_stock == 0 %}border-error bg-error/10{% else %}border-outline-variant{% endif %} rounded-lg transition-colors">
                                 <div class="flex flex-col">
-                                    <span class="font-body-md text-body-md font-bold text-primary">Ceramic Brake
-                                        Pads</span>
-                                    <span class="text-body-sm font-body-sm text-on-surface-variant">SKU: BRK-990</span>
+                                    <span class="font-body-md text-body-md font-bold text-primary">{{ item.part_name }}</span>
+                                    <span class="text-body-sm font-body-sm text-on-surface-variant">SKU: {{ item.sku }}</span>
                                 </div>
                                 <div class="text-right">
-                                    <span class="font-headline-sm text-headline-sm text-error">3</span>
-                                    <p class="text-label-caps text-label-caps text-error">REORDER</p>
+                                    <span class="font-headline-sm text-headline-sm {% if item.initial_stock == 0 %}text-error{% else %}text-amber-700 font-bold{% endif %}">{{ item.initial_stock }}</span>
+                                    <p class="text-label-caps text-label-caps {% if item.initial_stock == 0 %}text-error{% else %}text-amber-700{% endif %}">
+                                        {% if item.initial_stock == 0 %}OUT OF STOCK{% else %}LOW{% endif %}
+                                    </p>
                                 </div>
                             </div>
-                            <div
-                                class="flex items-center justify-between p-sm border border-outline-variant rounded-lg">
-                                <div class="flex flex-col">
-                                    <span class="font-body-md text-body-md font-bold text-primary">Oil Filter
-                                        XL-4</span>
-                                    <span class="text-body-sm font-body-sm text-on-surface-variant">SKU: FIL-221</span>
-                                </div>
-                                <div class="text-right">
-                                    <span class="font-headline-sm text-headline-sm text-tertiary-container">8</span>
-                                    <p class="text-label-caps text-label-caps text-tertiary-container">LOW</p>
-                                </div>
+                            {% empty %}
+                            <div class="p-sm text-center text-on-surface-variant font-body-md">
+                                All stock levels are healthy.
                             </div>
-                            <div
-                                class="flex items-center justify-between p-sm border border-outline-variant rounded-lg">
-                                <div class="flex flex-col">
-                                    <span class="font-body-md text-body-md font-bold text-primary">HID Headlamp</span>
-                                    <span class="text-body-sm font-body-sm text-on-surface-variant">SKU: LMP-882</span>
-                                </div>
-                                <div class="text-right">
-                                    <span class="font-headline-sm text-headline-sm text-tertiary-container">5</span>
-                                    <p class="text-label-caps text-label-caps text-tertiary-container">LOW</p>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </section>
                 </div>

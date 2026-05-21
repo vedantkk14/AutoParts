@@ -127,7 +127,7 @@ class VehicleCompatibility(models.Model):
     # ── Make choices ─────────────────────────────────────────────────────
     class Make(models.TextChoices):
         TOYOTA  = 'toyota',  'Toyota'
-        HONDA   = 'honda',   'Honda'
+        HONDA   = 'honda',   'Honda'    
         SUZUKI  = 'maruti_suzuki',  'Maruti Suzuki'
         HYUNDAI = 'hyundai', 'Hyundai'
         KIA     = 'kia',     'Kia'

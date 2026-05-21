@@ -148,250 +148,370 @@
                 </a>
             </div>
             <!-- Search & Filters Section -->
-            <section class="mb-xl space-y-md">
-                <div class="relative group">
-                    <div class="absolute inset-y-0 left-0 pl-md flex items-center pointer-events-none">
-                        <span class="material-symbols-outlined text-outline">search</span>
+            <section class="mb-xl">
+                <form method="GET" action="{% url 'view_inventory' %}" id="search-filter-form" class="space-y-md">
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-md flex items-center pointer-events-none">
+                            <span class="material-symbols-outlined text-outline">search</span>
+                        </div>
+                        <input
+                            name="q" value="{{ query|default:'' }}"
+                            class="w-full pl-12 pr-12 py-md bg-surface-container-lowest border border-outline-variant rounded-xl focus:ring-2 focus:ring-secondary focus:outline-none shadow-sm transition-shadow hover:shadow-md"
+                            placeholder="Search by Part Name, SKU, or OEM Number..." type="text" />
+                        <div class="absolute inset-y-0 right-0 pr-md flex items-center">
+                            <button type="submit" class="material-symbols-outlined text-primary hover:text-secondary transition-colors">search</button>
+                        </div>
                     </div>
-                    <input
-                        class="w-full pl-12 pr-12 py-md bg-surface-container-lowest border border-outline-variant rounded-xl focus:ring-2 focus:ring-secondary focus:outline-none shadow-sm transition-shadow hover:shadow-md"
-                        placeholder="Search by Part Name, SKU, or OEM Number..." type="text" />
-                    <div class="absolute inset-y-0 right-0 pr-md flex items-center">
-                        <button
-                            class="material-symbols-outlined text-primary hover:text-secondary-container transition-colors">mic</button>
+                    <!-- Filters Grid -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+                        <div class="flex flex-col gap-xs">
+                            <label class="font-label-caps text-label-caps text-on-surface-variant px-xs uppercase">Vehicle Make</label>
+                            <select name="make" onchange="this.form.submit()"
+                                class="bg-surface-container-low border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-secondary">
+                                <option value="">All Makes</option>
+                                {% for val, label in makes %}
+                                    <option value="{{ val }}" {% if selected_make == val %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-xs">
+                            <label class="font-label-caps text-label-caps text-on-surface-variant px-xs uppercase">Brand</label>
+                            <select name="brand" onchange="this.form.submit()"
+                                class="bg-surface-container-low border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-secondary">
+                                <option value="">All Brands</option>
+                                {% for val, label in brands %}
+                                    <option value="{{ val }}" {% if selected_brand == val %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-xs">
+                            <label class="font-label-caps text-label-caps text-on-surface-variant px-xs uppercase">Category</label>
+                            <select name="category" onchange="this.form.submit()"
+                                class="bg-surface-container-low border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-secondary">
+                                <option value="">All Categories</option>
+                                {% for val, label in categories %}
+                                    <option value="{{ val }}" {% if selected_category == val %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-xs">
+                            <label class="font-label-caps text-label-caps text-on-surface-variant px-xs uppercase">Sort By</label>
+                            <select name="sort_by" onchange="this.form.submit()"
+                                class="bg-surface-container-low border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-secondary">
+                                <option value="latest" {% if selected_sort == 'latest' or not selected_sort %}selected{% endif %}>Latest Arrival</option>
+                                <option value="stock_low_high" {% if selected_sort == 'stock_low_high' %}selected{% endif %}>Stock: Low to High</option>
+                                <option value="price_high_low" {% if selected_sort == 'price_high_low' %}selected{% endif %}>Price: High to Low</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <!-- Filters Grid -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
-                    <div class="flex flex-col gap-xs">
-                        <label class="font-label-caps text-label-caps text-on-surface-variant px-xs uppercase">Vehicle
-                            Model</label>
-                        <select
-                            class="bg-surface-container-low border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-secondary">
-                            <option>All Models</option>
-                            <option>Maruti Swift</option>
-                            <option>Hyundai Creta</option>
-                            <option>Honda City</option>
-                        </select>
-                    </div>
-                    <div class="flex flex-col gap-xs">
-                        <label
-                            class="font-label-caps text-label-caps text-on-surface-variant px-xs uppercase">Brand</label>
-                        <select
-                            class="bg-surface-container-low border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-secondary">
-                            <option>All Brands</option>
-                            <option>Brembo</option>
-                            <option>Bosch</option>
-                            <option>TVS</option>
-                        </select>
-                    </div>
-                    <div class="flex flex-col gap-xs">
-                        <label
-                            class="font-label-caps text-label-caps text-on-surface-variant px-xs uppercase">Category</label>
-                        <select
-                            class="bg-surface-container-low border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-secondary">
-                            <option>Brakes</option>
-                            <option>Engine</option>
-                            <option>Suspension</option>
-                        </select>
-                    </div>
-                    <div class="flex flex-col gap-xs">
-                        <label class="font-label-caps text-label-caps text-on-surface-variant px-xs uppercase">Sort
-                            By</label>
-                        <select
-                            class="bg-surface-container-low border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-secondary">
-                            <option>Latest Arrival</option>
-                            <option>Stock: Low to High</option>
-                            <option>Price: High to Low</option>
-                        </select>
-                    </div>
-                </div>
+                </form>
             </section>
             <!-- Inventory Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter">
-                <!-- Card 1 -->
+                {% for item in item_info %}
                 <div
-                    class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
+                    class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group relative">
                     <div class="h-40 bg-surface-container relative">
-                        <img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                            data-alt="A professional, high-resolution product photograph of a premium brake pad set for a car. The items are neatly arranged on a clean, light grey surface with soft studio lighting that emphasizes the industrial textures. The background is a minimalist, modern warehouse setting with hints of dark blue and corporate grey, evoking a sense of reliability and precision in an automotive wholesale context."
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsiV0C86THs7r0RmajiKu7FiMzOLDmtvB1-S7ZuWU5nn86g8dTLDDYxhP5uVsw03iDM8UL1DWgJWX8-OGOxZQbnLyEgBO1LK6uIwQ7CkvNTXxeRUZ1TS8f9JdD5ELzbxostdgexzt1aDHyTWUFXbLims6PZbCrAiD6Gzo0yNJWGMw7LfUH8IbjTkdjOsV33OjH9WS-u0nqNcVMHBVSnC-kKVMb5-dhGrdFzICd66DbsEq6trLuX78vRhKm_CDDaYH2zRUewfaPE28" />
+                        {% if item.image %}
+                            <img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                src="{{ item.image.url }}" alt="{{ item.part_name }}" />
+                        {% else %}
+                            <div class="w-full h-full flex flex-col items-center justify-center bg-surface-container-low text-on-surface-variant">
+                                <span class="material-symbols-outlined text-[48px] mb-1">build_circle</span>
+                                <span class="text-body-sm font-semibold">No Image Available</span>
+                            </div>
+                        {% endif %}
+                        
+                        {% if item.status == 'draft' %}
+                            <div class="absolute top-sm left-sm bg-amber-500 text-white px-2 py-0.5 rounded text-[10px] font-bold uppercase shadow-sm animate-pulse">
+                                Draft
+                            </div>
+                        {% endif %}
+
                         <div
                             class="absolute top-sm right-sm bg-surface-container-lowest/90 px-sm py-xs rounded font-data-mono text-data-mono text-primary shadow-sm">
-                            A-12
+                            {% if item.aisle_location or item.bin_location %}
+                                {{ item.aisle_location|default:"" }}-{{ item.bin_location|default:"" }}
+                            {% else %}
+                                N/A
+                            {% endif %}
                         </div>
                     </div>
                     <div class="p-md space-y-sm">
                         <div class="flex justify-between items-start">
                             <div>
-                                <h3 class="font-headline-sm text-body-lg font-bold text-primary">Brake Pad Set</h3>
-                                <p class="font-body-sm text-on-surface-variant">OEM: 55810M75J00</p>
+                                <h3 class="font-headline-sm text-body-lg font-bold text-primary truncate max-w-[140px]" title="{{ item.part_name }}">{{ item.part_name }}</h3>
+                                <p class="font-body-sm text-on-surface-variant">OEM: {{ item.sku }}</p>
                             </div>
-                            <span
-                                class="bg-surface-container text-on-surface-variant font-label-caps text-label-caps px-sm py-1 rounded-full">MARUTI
-                                SWIFT</span>
+                            <div class="flex flex-col gap-1 items-end">
+                                {% for compat in item.vehicle_compatibilities.all|slice:":2" %}
+                                <span
+                                    class="bg-surface-container text-on-surface-variant font-label-caps text-label-caps px-sm py-1 rounded-full whitespace-nowrap">{{ compat.get_make_display }} {{ compat.model_name }}</span>
+                                {% empty %}
+                                <span
+                                    class="bg-surface-container text-on-surface-variant font-label-caps text-label-caps px-sm py-1 rounded-full">Universal</span>
+                                {% endfor %}
+                                {% if item.vehicle_compatibilities.count > 2 %}
+                                <span class="text-[10px] text-on-surface-variant font-semibold">+{{ item.vehicle_compatibilities.count|add:"-2" }} more</span>
+                                {% endif %}
+                            </div>
                         </div>
                         <div class="flex items-center gap-sm">
                             <span class="font-body-sm text-on-surface-variant">Brand:</span>
-                            <span class="font-body-sm text-primary font-semibold">Brembo</span>
+                            <span class="font-body-sm text-primary font-semibold">{{ item.get_brand_display }}</span>
                         </div>
                         <div class="flex justify-between items-center py-xs">
                             <div class="flex flex-col">
                                 <span
                                     class="font-label-caps text-label-caps text-on-surface-variant uppercase">Stock</span>
-                                <span class="font-data-mono text-data-mono text-tertiary-fixed-dim">15 units</span>
+                                {% if item.initial_stock <= item.low_stock_threshold %}
+                                    <span class="font-data-mono text-data-mono text-error font-bold">{{ item.initial_stock }} units</span>
+                                {% else %}
+                                    <span class="font-data-mono text-data-mono text-emerald-700 font-bold">{{ item.initial_stock }} units</span>
+                                {% endif %}
                             </div>
                             <div class="flex flex-col items-end">
                                 <span
                                     class="font-label-caps text-label-caps text-on-surface-variant uppercase">Price</span>
-                                <span class="font-headline-sm text-primary font-bold">₹1,250</span>
+                                <span class="font-headline-sm text-primary font-bold">₹{{ item.retail_price }}</span>
                             </div>
                         </div>
-                        <button
-                            class="w-full bg-secondary-container text-on-secondary-container py-sm rounded-lg font-bold hover:brightness-95 active:scale-95 transition-all flex items-center justify-center gap-xs">
-                            <span class="material-symbols-outlined text-sm">add_shopping_cart</span>
-                            Add to Order
-                        </button>
+                        <div class="flex gap-2 w-full pt-1">
+                            <a href="{% url 'edit_inventory' item.id %}"
+                                class="flex-1 bg-surface-container-high hover:bg-surface-container-highest text-primary py-sm rounded-lg font-bold hover:brightness-95 active:scale-95 transition-all flex items-center justify-center gap-xs text-body-sm">
+                                <span class="material-symbols-outlined text-sm">edit</span>
+                                Edit
+                            </a>
+                            <button
+                                class="flex-1 bg-error-container/20 hover:bg-error-container/40 text-error py-sm rounded-lg font-bold hover:brightness-95 active:scale-95 transition-all flex items-center justify-center gap-xs text-body-sm delete-part-btn"
+                                data-id="{{ item.id }}" data-name="{{ item.part_name|escapejs }}">
+                                <span class="material-symbols-outlined text-sm">delete</span>
+                                Delete
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <!-- Card 2 -->
-                <div
-                    class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
-                    <div class="h-40 bg-surface-container relative">
-                        <img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                            data-alt="A detailed, macro view of a high-performance oil filter designed for modern vehicles. The filter is presented in a sterile, professional lighting environment with soft shadows and a cool-toned background. The visual style is crisp and utilitarian, highlighting the product's quality and the brand's commitment to industrial excellence in the automobile parts sector."
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcWp3TN5v7chpSkI2BTospo9fS9ya21k7DYmTddui7j-VH7RVHWPw7p4v4A1Q9uM0AQUrOiYf0nGY33M9JOzh8VKoGL35ZHhPKv0ViSozISbSQjFPgvL7sxXAItVJDRT2gbAv-uW0Hq_LzAWkELa3vO2WMroq181jSKWwya-40dUC9gI2B2e4GJIWaOGFBeK8wl-GH2yi5Plr3Sv2Dgnvxp09_4gx3R2NqIPNvkX_zDn-OjPu3xU2Tje-dEcJq7Pz4ffUJH9l_pDE" />
-                        <div
-                            class="absolute top-sm right-sm bg-surface-container-lowest/90 px-sm py-xs rounded font-data-mono text-data-mono text-primary shadow-sm">
-                            B-04
-                        </div>
-                    </div>
-                    <div class="p-md space-y-sm">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h3 class="font-headline-sm text-body-lg font-bold text-primary">Oil Filter</h3>
-                                <p class="font-body-sm text-on-surface-variant">OEM: 26300-35503</p>
-                            </div>
-                            <span
-                                class="bg-surface-container text-on-surface-variant font-label-caps text-label-caps px-sm py-1 rounded-full">HYUNDAI
-                                CRETA</span>
-                        </div>
-                        <div class="flex items-center gap-sm">
-                            <span class="font-body-sm text-on-surface-variant">Brand:</span>
-                            <span class="font-body-sm text-primary font-semibold">Bosch</span>
-                        </div>
-                        <div class="flex justify-between items-center py-xs">
-                            <div class="flex flex-col">
-                                <span
-                                    class="font-label-caps text-label-caps text-on-surface-variant uppercase">Stock</span>
-                                <span class="font-data-mono text-data-mono text-error font-bold">3 units</span>
-                            </div>
-                            <div class="flex flex-col items-end">
-                                <span
-                                    class="font-label-caps text-label-caps text-on-surface-variant uppercase">Price</span>
-                                <span class="font-headline-sm text-primary font-bold">₹480</span>
-                            </div>
-                        </div>
-                        <button
-                            class="w-full bg-secondary-container text-on-secondary-container py-sm rounded-lg font-bold hover:brightness-95 active:scale-95 transition-all flex items-center justify-center gap-xs">
-                            <span class="material-symbols-outlined text-sm">add_shopping_cart</span>
-                            Add to Order
-                        </button>
-                    </div>
+                {% empty %}
+                <div class="col-span-full py-12 flex flex-col items-center justify-center text-center">
+                    <span class="material-symbols-outlined text-[64px] text-on-surface-variant mb-4">inventory</span>
+                    <h3 class="text-headline-sm font-bold text-primary mb-2">No Parts Found</h3>
+                    <p class="text-body-md text-on-surface-variant">There are no inventory items matching your search or filters.</p>
                 </div>
-                <!-- Card 3 -->
-                <div
-                    class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
-                    <div class="h-40 bg-surface-container relative">
-                        <img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                            data-alt="A studio shot of an automotive headlight assembly, featuring sleek glass and metallic components. The image is captured with sharp focus and professional studio lighting against a clean white backdrop, creating a high-contrast and modern corporate aesthetic. The lighting highlights the intricate details and high-quality manufacturing of the car part."
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCblWkRrJX0HlVgMz7VllGa5nyeKZgUwA83v9ln0_HtZLrOHIv3vhIxm1kdRJUlkRn-QlLQ1IzLrclrTNKvixl4f-lVhqE9zEi4N50eg0hrhHMrfioieb8WVmzvbAQbUJaZ7L3qifSu6ToxM_bWk6GudWV0ypdqVr75Gf6Kl1IFAGFShx1PsfUnYDadkeqY1M2nT6Y8Odrin8_o4S16nC4xycbMsRdjMcsMBGDQGQPxcTkAwg9T--hgPfZlxnwoF07kVgW4mZgYYzo" />
-                        <div
-                            class="absolute top-sm right-sm bg-surface-container-lowest/90 px-sm py-xs rounded font-data-mono text-data-mono text-primary shadow-sm">
-                            D-22
-                        </div>
-                    </div>
-                    <div class="p-md space-y-sm">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h3 class="font-headline-sm text-body-lg font-bold text-primary">Headlight Assy L</h3>
-                                <p class="font-body-sm text-on-surface-variant">OEM: 33150-T9A-T01</p>
-                            </div>
-                            <span
-                                class="bg-surface-container text-on-surface-variant font-label-caps text-label-caps px-sm py-1 rounded-full">HONDA
-                                CITY</span>
-                        </div>
-                        <div class="flex items-center gap-sm">
-                            <span class="font-body-sm text-on-surface-variant">Brand:</span>
-                            <span class="font-body-sm text-primary font-semibold">Lumax</span>
-                        </div>
-                        <div class="flex justify-between items-center py-xs">
-                            <div class="flex flex-col">
-                                <span
-                                    class="font-label-caps text-label-caps text-on-surface-variant uppercase">Stock</span>
-                                <span class="font-data-mono text-data-mono text-on-tertiary-container">42 units</span>
-                            </div>
-                            <div class="flex flex-col items-end">
-                                <span
-                                    class="font-label-caps text-label-caps text-on-surface-variant uppercase">Price</span>
-                                <span class="font-headline-sm text-primary font-bold">₹8,750</span>
-                            </div>
-                        </div>
-                        <button
-                            class="w-full bg-secondary-container text-on-secondary-container py-sm rounded-lg font-bold hover:brightness-95 active:scale-95 transition-all flex items-center justify-center gap-xs">
-                            <span class="material-symbols-outlined text-sm">add_shopping_cart</span>
-                            Add to Order
-                        </button>
-                    </div>
-                </div>
-                <!-- Card 4 -->
-                <div
-                    class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
-                    <div class="h-40 bg-surface-container relative">
-                        <img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                            data-alt="An industrial-grade car shock absorber shown against a neutral, bright grey background. The metal surface has a subtle sheen reflecting professional studio lights. The composition is clean and minimalist, focusing on the heavy-duty engineering of the automotive part. The color scheme is dominated by metallic greys and deep blues, fitting the established wholesale brand identity."
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdZY2neIjc7I-uf2XsvtWjflO0w_1edCQZ2G_UvR2kfLE7mKPX_K4-95xH0o_nT5qNjpSHt5JBKCcNVJLL8OsrYXJihzdTzwDuQz8eADWCgerMlq_Ya6IRbypXk5vU9EEKNMlIWItOgiFfQiMjdezzvElhG_i0BgNgPS1FR9154yFlDk7BVGLJVm_D-rXBslw361r9DeGCUevQu-uiMHf-y7BknvXu2uEMmWC8-7CVwbOkITub4Iv_kcfZr9OPJtyp8g_6EuHJrkU" />
-                        <div
-                            class="absolute top-sm right-sm bg-surface-container-lowest/90 px-sm py-xs rounded font-data-mono text-data-mono text-primary shadow-sm">
-                            C-09
-                        </div>
-                    </div>
-                    <div class="p-md space-y-sm">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h3 class="font-headline-sm text-body-lg font-bold text-primary">Strut Assembly</h3>
-                                <p class="font-body-sm text-on-surface-variant">OEM: 48510-0K010</p>
-                            </div>
-                            <span
-                                class="bg-surface-container text-on-surface-variant font-label-caps text-label-caps px-sm py-1 rounded-full">TOYOTA
-                                INNOVA</span>
-                        </div>
-                        <div class="flex items-center gap-sm">
-                            <span class="font-body-sm text-on-surface-variant">Brand:</span>
-                            <span class="font-body-sm text-primary font-semibold">Gabriel</span>
-                        </div>
-                        <div class="flex justify-between items-center py-xs">
-                            <div class="flex flex-col">
-                                <span
-                                    class="font-label-caps text-label-caps text-on-surface-variant uppercase">Stock</span>
-                                <span class="font-data-mono text-data-mono text-on-tertiary-container">8 units</span>
-                            </div>
-                            <div class="flex flex-col items-end">
-                                <span
-                                    class="font-label-caps text-label-caps text-on-surface-variant uppercase">Price</span>
-                                <span class="font-headline-sm text-primary font-bold">₹4,200</span>
-                            </div>
-                        </div>
-                        <button
-                            class="w-full bg-secondary-container text-on-secondary-container py-sm rounded-lg font-bold hover:brightness-95 active:scale-95 transition-all flex items-center justify-center gap-xs">
-                            <span class="material-symbols-outlined text-sm">add_shopping_cart</span>
-                            Add to Order
-                        </button>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </main>
     <!-- Bottom Navigation Bar (Mobile) -->
     {% include "bottom_nav_bar.html" %}
+
+    <!-- Messages Modal Popup -->
+    <div id="message-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-md bg-black/40 backdrop-blur-sm transition-all duration-300 opacity-0">
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-2xl shadow-[0_20px_40px_-15px_rgba(3,22,54,0.15)] max-w-sm w-full overflow-hidden transform transition-all duration-300 scale-95 flex flex-col p-lg gap-md">
+            <div class="flex flex-col items-center text-center gap-sm">
+                <div id="modal-icon-container" class="w-16 h-16 rounded-full flex items-center justify-center">
+                    <span id="modal-icon" class="material-symbols-outlined text-[36px]"></span>
+                </div>
+                <h3 id="modal-title" class="font-headline-sm text-headline-sm text-primary"></h3>
+                <p id="modal-message" class="font-body-md text-body-md text-on-surface-variant px-sm"></p>
+            </div>
+            <button id="modal-close-btn" class="w-full py-sm bg-primary text-on-primary hover:bg-primary/90 font-semibold rounded-xl shadow-md transition-all duration-200">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Django Messages Data Source (Hidden) -->
+    {% if messages %}
+    <div id="django-messages" style="display: none;">
+        {% for message in messages %}
+        <span class="django-msg" data-tags="{{ message.tags }}" data-text="{{ message }}"></span>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Confirmation Delete Modal -->
+    <div id="delete-confirm-modal"
+        class="hidden fixed inset-0 z-50 flex items-center justify-center p-md bg-black/40 backdrop-blur-sm transition-all duration-300 opacity-0">
+        <div
+            class="bg-surface-container-lowest border border-outline-variant rounded-2xl shadow-[0_20px_40px_-15px_rgba(3,22,54,0.15)] max-w-sm w-full overflow-hidden transform transition-all duration-300 scale-95 flex flex-col p-lg gap-md">
+            <div class="flex flex-col items-center text-center gap-sm">
+                <div class="w-16 h-16 rounded-full flex items-center justify-center bg-error-container/20 text-error">
+                    <span class="material-symbols-outlined text-[36px]">warning</span>
+                </div>
+                <h3 class="font-headline-sm text-headline-sm text-primary">Delete Inventory Item</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant px-sm">
+                    Are you sure you want to delete <span id="delete-part-name" class="font-bold text-on-surface text-error"></span>? This action cannot be undone.
+                </p>
+            </div>
+            <div class="flex gap-sm">
+                <button id="cancel-delete-btn"
+                    class="flex-1 py-sm bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-semibold rounded-xl transition-all duration-200">
+                    Cancel
+                </button>
+                <button id="confirm-delete-btn"
+                    class="flex-1 py-sm bg-error text-on-error hover:bg-error/90 font-semibold rounded-xl shadow-md transition-all duration-200">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showModal(title, message, isError, redirectUrl = null) {
+            const modal = document.getElementById('message-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalMessage = document.getElementById('modal-message');
+            const modalIcon = document.getElementById('modal-icon');
+            const modalIconContainer = document.getElementById('modal-icon-container');
+            const closeBtn = document.getElementById('modal-close-btn');
+
+            modalTitle.textContent = title;
+            modalMessage.textContent = message;
+            
+            if (isError) {
+                modalIcon.textContent = 'error';
+                modalIconContainer.className = "w-16 h-16 rounded-full flex items-center justify-center bg-error-container/20 text-error";
+            } else {
+                modalIcon.textContent = 'check_circle';
+                modalIconContainer.className = "w-16 h-16 rounded-full flex items-center justify-center bg-emerald-100 text-emerald-700";
+            }
+
+            const closeAction = () => {
+                modal.classList.add('opacity-0');
+                const innerCard = modal.querySelector('div');
+                if (innerCard) {
+                    innerCard.classList.replace('scale-100', 'scale-95');
+                }
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    if (redirectUrl) {
+                        window.location.href = redirectUrl;
+                    }
+                }, 300);
+            };
+
+            closeBtn.onclick = closeAction;
+
+            modal.classList.remove('hidden');
+            // trigger reflow
+            modal.offsetHeight;
+            modal.classList.remove('opacity-0');
+            const innerCard = modal.querySelector('div');
+            if (innerCard) {
+                innerCard.classList.replace('scale-95', 'scale-100');
+            }
+
+            modal.onclick = function(e) {
+                if (e.target === modal) {
+                    closeAction();
+                }
+            };
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Auto-show backend messages if any exist
+            const messagesContainer = document.getElementById('django-messages');
+            if (messagesContainer) {
+                const msgElements = messagesContainer.querySelectorAll('.django-msg');
+                msgElements.forEach(el => {
+                    const tags = el.getAttribute('data-tags');
+                    const text = el.getAttribute('data-text');
+                    const isError = tags.includes('error');
+                    showModal(
+                        isError ? 'Error' : 'Success',
+                        text,
+                        isError
+                    );
+                });
+            }
+
+            let partIdToDelete = null;
+            let cardToDelete = null;
+
+            const deleteModal = document.getElementById('delete-confirm-modal');
+            const deletePartNameSpan = document.getElementById('delete-part-name');
+            const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+            const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+
+            function showDeleteModal(id, name, card) {
+                partIdToDelete = id;
+                cardToDelete = card;
+                deletePartNameSpan.textContent = name;
+
+                deleteModal.classList.remove('hidden');
+                // force reflow
+                deleteModal.offsetHeight;
+                deleteModal.classList.remove('opacity-0');
+                const innerCard = deleteModal.querySelector('div');
+                if (innerCard) {
+                    innerCard.classList.replace('scale-95', 'scale-100');
+                }
+            }
+
+            function hideDeleteModal() {
+                deleteModal.classList.add('opacity-0');
+                const innerCard = deleteModal.querySelector('div');
+                if (innerCard) {
+                    innerCard.classList.replace('scale-100', 'scale-95');
+                }
+                setTimeout(() => {
+                    deleteModal.classList.add('hidden');
+                }, 300);
+            }
+
+            cancelDeleteBtn.onclick = hideDeleteModal;
+            deleteModal.onclick = (e) => {
+                if (e.target === deleteModal) hideDeleteModal();
+            };
+
+            confirmDeleteBtn.onclick = async () => {
+                if (!partIdToDelete) return;
+                try {
+                    const response = await fetch(`/inventory/delete/${partIdToDelete}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}',
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    const result = await response.json();
+                    if (response.ok && result.status === 'success') {
+                        if (cardToDelete) {
+                            cardToDelete.style.transition = 'all 0.3s ease';
+                            cardToDelete.style.opacity = '0';
+                            cardToDelete.style.transform = 'scale(0.95)';
+                            setTimeout(() => {
+                                cardToDelete.remove();
+                                // If no cards left, reload or show empty state
+                                const remainingCards = document.querySelectorAll('#main-content div.bg-surface-container-lowest');
+                                if (remainingCards.length === 0) {
+                                    window.location.reload();
+                                }
+                            }, 300);
+                        }
+                    } else {
+                        alert(result.message || 'Error deleting item.');
+                    }
+                } catch (error) {
+                    alert('Failed to delete item. Please try again.');
+                } finally {
+                    hideDeleteModal();
+                }
+            };
+
+            // Event delegation for delete buttons
+            document.addEventListener('click', (e) => {
+                const btn = e.target.closest('.delete-part-btn');
+                if (btn) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    const id = btn.getAttribute('data-id');
+                    const name = btn.getAttribute('data-name');
+                    // Find card container: in view_inventory.html, cards have classes "flex flex-col bg-surface-container-lowest..."
+                    const card = btn.closest('.bg-surface-container-lowest');
+                    showDeleteModal(id, name, card);
+                }
+            });
+        });
+    </script>
 {% endblock %}

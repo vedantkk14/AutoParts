@@ -20,6 +20,8 @@ from django.views.generic import View
 from django.db import router
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from home.views import *
 from orders.views import *
@@ -38,6 +40,8 @@ urlpatterns = [
     #paths for orders section
     path(route='add_orders/', view=add_order, name='add_order'),
     path(route='all_orders/', view=all_orders, name='all_orders'),
+    path(route='orders/save/', view=save_order, name='save_order'),
+    path(route='orders/update_status/<int:order_id>/', view=update_order_status, name='update_order_status'),
     
     #paths for customers/clients section
     path(route='customers/create/', view=create_customer, name='create_customer'),
@@ -50,9 +54,14 @@ urlpatterns = [
     #paths for inventory section
     path(route='add_inventory/', view=add_inventory, name='add_inventory'),
     path(route='view_inventory/', view=view_inventory, name='view_inventory'),
+    path(route='inventory/edit/<int:item_id>/', view=edit_inventory, name='edit_inventory'),
+    path(route='inventory/delete/<int:item_id>/', view=delete_inventory, name='delete_inventory'),
 
     #paths for analytics section
     path(route='view_analytics/', view=view_analytics, name='view_analytics'),
     
     path("admin/", admin.site.urls),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

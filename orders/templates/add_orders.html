@@ -162,20 +162,26 @@
                     </div>
                     <input
                         class="w-full pl-10 pr-3 py-2 border border-outline-variant rounded-md bg-surface text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container font-body-md text-body-md"
-                        id="customerSearch" placeholder="Search Customer..." type="text" value="Metro Auto Works" />
+                        id="customerSearch" placeholder="Search Customer..." type="text" autocomplete="off" />
+                    <input type="hidden" id="selectedCustomerId" value="" />
+                    <!-- Autocomplete Dropdown List -->
+                    <div id="customerSuggestions" class="hidden absolute left-0 right-0 mt-1 max-h-60 overflow-y-auto bg-surface-container-lowest border border-outline-variant rounded-md shadow-lg z-50">
+                        <!-- Suggestions will be populated dynamically -->
+                    </div>
                 </div>
                 <div class="grid grid-cols-2 gap-sm">
                     <div class="bg-surface-container rounded-md p-sm">
                         <p class="text-label-caps font-label-caps text-on-surface-variant">Phone</p>
-                        <p id="customerPhone" class="text-data-mono font-data-mono text-on-surface">+1 (555) 019-8234</p>
+                        <p id="customerPhone" class="text-data-mono font-data-mono text-on-surface">—</p>
                     </div>
                     <div class="bg-surface-container rounded-md p-sm">
                         <p class="text-label-caps font-label-caps text-on-surface-variant">City</p>
-                        <p id="customerCity" class="text-body-md font-body-md text-on-surface">Seattle, WA</p>
+                        <p id="customerCity" class="text-body-md font-body-md text-on-surface">—</p>
                     </div>
                 </div>
             </div>
         </section>
+        
         <!-- Order Details Section -->
         <!-- <section
             class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md shadow-[0_4px_12px_rgba(26,43,76,0.05)]">
@@ -232,108 +238,25 @@
                         <span class="material-symbols-outlined text-secondary">search</span>
                     </div>
                     <input
+                        id="itemSearch"
                         class="w-full pl-10 pr-12 py-3 border-2 border-primary-fixed-dim rounded-lg bg-surface text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary font-body-md text-body-md placeholder-on-surface-variant shadow-sm"
-                        placeholder="Search part name, SKU, vehicle..." type="text" />
+                        placeholder="Search part name, SKU, vehicle..." type="text" autocomplete="off" />
                     <button aria-label="Voice Search"
                         class="absolute inset-y-0 right-0 pr-3 flex items-center text-on-surface-variant hover:text-secondary transition-colors">
                         <span class="material-symbols-outlined">mic</span>
                     </button>
+                    <!-- Item Suggestions Dropdown -->
+                    <div id="itemSuggestions" class="hidden absolute left-0 right-0 mt-1 max-h-60 overflow-y-auto bg-surface-container-lowest border border-outline-variant rounded-md shadow-lg z-50">
+                        <!-- Suggestions will be populated dynamically -->
+                    </div>
                 </div>
             </div>
             <!-- Line Items -->
-            <div class="space-y-sm pb-lg">
-                <!-- Item 1 -->
-                <div
-                    class="bg-surface-container-lowest border border-outline-variant rounded-lg p-3 shadow-[0_2px_8px_rgba(26,43,76,0.03)] flex flex-col gap-sm">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="text-body-lg font-body-lg font-semibold text-primary">Brake Pad Set - Ceramic
-                            </h3>
-                            <p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">Toyota Camry '18-'22 |
-                                Bosch</p>
-                        </div>
-                        <button aria-label="Remove item"
-                            class="text-error hover:bg-error-container/20 p-1 rounded-full transition-colors">
-                            <span class="material-symbols-outlined text-[20px]">close</span>
-                        </button>
-                    </div>
-                    <div class="flex justify-between items-center mt-1">
-                        <div class="flex items-center gap-2">
-                            <span
-                                class="bg-surface-container px-2 py-0.5 rounded text-label-caps font-label-caps text-on-surface-variant">SKU:
-                                BP-CR-092</span>
-                            <span
-                                class="bg-emerald-100 px-2 py-0.5 rounded text-label-caps font-label-caps text-emerald-800">Stock:
-                                45</span>
-                        </div>
-                        <div class="text-data-mono font-data-mono text-primary">$45.00</div>
-                    </div>
-                    <div class="flex justify-between items-center mt-2 border-t border-outline-variant pt-2">
-                        <div
-                            class="flex items-center border border-outline-variant rounded-md bg-surface overflow-hidden shadow-sm">
-                            <button
-                                class="px-3 py-1 bg-surface hover:bg-surface-container-high transition-colors text-on-surface-variant border-r border-outline-variant">
-                                <span class="material-symbols-outlined text-[18px]">remove</span>
-                            </button>
-                            <input
-                                class="w-12 text-center text-data-mono font-data-mono border-none focus:ring-0 p-1 bg-surface"
-                                min="1" type="number" value="4" />
-                            <button
-                                class="px-3 py-1 bg-surface hover:bg-surface-container-high transition-colors text-on-surface-variant border-l border-outline-variant">
-                                <span class="material-symbols-outlined text-[18px]">add</span>
-                            </button>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-label-caps font-label-caps text-on-surface-variant">Subtotal</p>
-                            <p class="text-headline-sm font-headline-sm text-primary-container font-bold">$180.00</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Item 2 -->
-                <div
-                    class="bg-surface-container-lowest border border-outline-variant rounded-lg p-3 shadow-[0_2px_8px_rgba(26,43,76,0.03)] flex flex-col gap-sm">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="text-body-lg font-body-lg font-semibold text-primary">Oil Filter - Synthetic</h3>
-                            <p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">Universal Fit | Fram
-                                Ultra</p>
-                        </div>
-                        <button aria-label="Remove item"
-                            class="text-error hover:bg-error-container/20 p-1 rounded-full transition-colors">
-                            <span class="material-symbols-outlined text-[20px]">close</span>
-                        </button>
-                    </div>
-                    <div class="flex justify-between items-center mt-1">
-                        <div class="flex items-center gap-2">
-                            <span
-                                class="bg-surface-container px-2 py-0.5 rounded text-label-caps font-label-caps text-on-surface-variant">SKU:
-                                OF-SYN-XG</span>
-                            <span
-                                class="bg-amber-100 px-2 py-0.5 rounded text-label-caps font-label-caps text-amber-800">Stock:
-                                8</span>
-                        </div>
-                        <div class="text-data-mono font-data-mono text-primary">$12.50</div>
-                    </div>
-                    <div class="flex justify-between items-center mt-2 border-t border-outline-variant pt-2">
-                        <div
-                            class="flex items-center border border-outline-variant rounded-md bg-surface overflow-hidden shadow-sm">
-                            <button
-                                class="px-3 py-1 bg-surface hover:bg-surface-container-high transition-colors text-on-surface-variant border-r border-outline-variant">
-                                <span class="material-symbols-outlined text-[18px]">remove</span>
-                            </button>
-                            <input
-                                class="w-12 text-center text-data-mono font-data-mono border-none focus:ring-0 p-1 bg-surface"
-                                min="1" type="number" value="12" />
-                            <button
-                                class="px-3 py-1 bg-surface hover:bg-surface-container-high transition-colors text-on-surface-variant border-l border-outline-variant">
-                                <span class="material-symbols-outlined text-[18px]">add</span>
-                            </button>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-label-caps font-label-caps text-on-surface-variant">Subtotal</p>
-                            <p class="text-headline-sm font-headline-sm text-primary-container font-bold">$150.00</p>
-                        </div>
-                    </div>
+            <div id="orderItemsContainer" class="space-y-sm pb-lg">
+                <div id="emptyOrderPlaceholder" class="bg-surface-container-lowest border border-dashed border-outline-variant rounded-lg p-lg text-center flex flex-col items-center justify-center min-h-[150px]">
+                    <span class="material-symbols-outlined text-[48px] text-on-surface-variant mb-2">shopping_cart</span>
+                    <p class="text-body-lg font-semibold text-primary">Your Order is Empty</p>
+                    <p class="text-body-sm text-on-surface-variant">Use the search bar above to find and add spare parts to this order.</p>
                 </div>
             </div>
         </section>
@@ -345,32 +268,49 @@
             <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-body-sm font-body-sm">
                 <div class="flex justify-between text-on-surface-variant">
                     <span>Total Items:</span>
-                    <span class="font-data-mono text-on-surface font-semibold">16</span>
+                    <span id="summaryTotalItems" class="font-data-mono text-on-surface font-semibold">0</span>
                 </div>
                 <div class="flex justify-between text-on-surface-variant">
                     <span>Subtotal:</span>
-                    <span class="font-data-mono text-on-surface font-semibold">$330.00</span>
+                    <span id="summarySubtotal" class="font-data-mono text-on-surface font-semibold">$0.00</span>
                 </div>
                 <div class="flex justify-between text-on-surface-variant">
                     <span>Discount (10%):</span>
-                    <span class="font-data-mono text-emerald-600 font-semibold">-$33.00</span>
+                    <span id="summaryDiscount" class="font-data-mono text-emerald-600 font-semibold">-$0.00</span>
                 </div>
                 <div class="flex justify-between text-primary font-bold border-t border-outline-variant pt-1">
                     <span>Final Total:</span>
-                    <span class="font-data-mono text-headline-sm font-headline-sm">$297.00</span>
+                    <span id="summaryFinalTotal" class="font-data-mono text-headline-sm font-headline-sm">$0.00</span>
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-md">
-                <button
-                    class="bg-surface text-secondary border border-outline-variant rounded-md py-3 font-body-md text-body-md font-semibold hover:bg-surface-container-low transition-colors text-center shadow-sm">
+                <button id="generateInvoiceBtn"
+                    class="bg-surface text-secondary border border-outline-variant rounded-md py-3 font-body-md text-body-md font-semibold hover:bg-surface-container-low transition-colors text-center shadow-sm flex justify-center items-center gap-2">
                     Generate Invoice
+                    <span class="material-symbols-outlined text-[18px]">receipt</span>
                 </button>
-                <button
+                <button id="saveOrderBtn"
                     class="bg-secondary text-on-secondary rounded-md py-3 font-body-md text-body-md font-semibold hover:bg-secondary-container transition-colors shadow-sm text-center flex justify-center items-center gap-2">
                     Save Order
                     <span class="material-symbols-outlined text-[18px]">check_circle</span>
                 </button>
             </div>
+        </div>
+    </div>
+
+    <!-- Order Success/Error Modal -->
+    <div id="orderModal" class="hidden fixed inset-0 z-[110] flex items-center justify-center p-md bg-black/40 backdrop-blur-sm transition-all duration-300 opacity-0">
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-2xl shadow-[0_20px_40px_-15px_rgba(3,22,54,0.15)] max-w-sm w-full overflow-hidden transform transition-all duration-300 scale-95 flex flex-col p-lg gap-md">
+            <div class="flex flex-col items-center text-center gap-sm">
+                <div id="orderModalIconWrap" class="w-16 h-16 rounded-full flex items-center justify-center">
+                    <span id="orderModalIcon" class="material-symbols-outlined text-[36px]"></span>
+                </div>
+                <h3 id="orderModalTitle" class="font-headline-sm text-headline-sm text-primary"></h3>
+                <p id="orderModalMessage" class="font-body-md text-body-md text-on-surface-variant px-sm"></p>
+            </div>
+            <button id="orderModalCloseBtn" class="w-full py-sm bg-primary text-on-primary hover:bg-primary/90 font-semibold rounded-xl shadow-md transition-all duration-200">
+                Close
+            </button>
         </div>
     </div>
 
@@ -453,9 +393,37 @@
         </div>
     </div>
 
+    <!-- Customers Data JSON -->
+    <script id="customers-data" type="application/json">
+        [
+            {% for customer in customers %}
+                {
+                    "id": "{{ customer.id }}",
+                    "company_name": "{{ customer.customer_company_name|escapejs }}",
+                    "name": "{{ customer.customer_name|escapejs }}",
+                    "phone": "{{ customer.customer_phone_number|default_if_none:'' }}",
+                    "city": "{{ customer.customer_city|escapejs }}"
+                }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ]
+    </script>
+
     <!-- Modal JavaScript -->
     <script>
+        // Global suggestions list
+        let customersList = [];
+
         document.addEventListener('DOMContentLoaded', function() {
+            // Load initial customer data
+            const customersDataEl = document.getElementById('customers-data');
+            if (customersDataEl) {
+                try {
+                    customersList = JSON.parse(customersDataEl.textContent);
+                } catch (e) {
+                    console.error('Failed to parse customers data:', e);
+                }
+            }
+
             const modal = document.getElementById('addCustomerModal');
             const backdrop = document.getElementById('modalBackdrop');
             const card = document.getElementById('modalCard');
@@ -472,6 +440,79 @@
             const customerSearchInput = document.getElementById('customerSearch');
             const customerPhoneDisplay = document.getElementById('customerPhone');
             const customerCityDisplay = document.getElementById('customerCity');
+            const suggestionsContainer = document.getElementById('customerSuggestions');
+
+            // Autocomplete search handlers
+            function filterCustomers(query) {
+                if (!query) return [];
+                const lowerQuery = query.toLowerCase();
+                return customersList.filter(c => 
+                    (c.company_name && c.company_name.toLowerCase().includes(lowerQuery)) ||
+                    (c.name && c.name.toLowerCase().includes(lowerQuery))
+                );
+            }
+
+            function showSuggestions(matches) {
+                suggestionsContainer.innerHTML = '';
+                if (matches.length === 0) {
+                    suggestionsContainer.classList.add('hidden');
+                    return;
+                }
+
+                matches.forEach(customer => {
+                    const div = document.createElement('div');
+                    div.className = 'p-3 hover:bg-surface-container cursor-pointer text-body-md text-on-surface select-none border-b border-outline-variant/30 last:border-b-0 transition-colors';
+                    
+                    div.innerHTML = `
+                        <div class="font-semibold text-primary">${customer.company_name}</div>
+                        <div class="text-body-sm text-on-surface-variant flex justify-between mt-0.5">
+                            <span>Contact: ${customer.name}</span>
+                            <span class="text-data-mono font-medium">${customer.phone ? customer.phone : ''}</span>
+                        </div>
+                    `;
+
+                    div.addEventListener('click', () => {
+                        customerSearchInput.value = `${customer.company_name} (${customer.name})`;
+                        customerPhoneDisplay.innerText = customer.phone ? customer.phone : '—';
+                        customerCityDisplay.innerText = customer.city ? customer.city : '—';
+                        document.getElementById('selectedCustomerId').value = customer.id;
+                        suggestionsContainer.classList.add('hidden');
+                    });
+
+                    suggestionsContainer.appendChild(div);
+                });
+
+                suggestionsContainer.classList.remove('hidden');
+            }
+
+            if (customerSearchInput && suggestionsContainer) {
+                customerSearchInput.addEventListener('input', function() {
+                    const query = this.value.trim();
+                    if (!query) {
+                        suggestionsContainer.classList.add('hidden');
+                        customerPhoneDisplay.innerText = '—';
+                        customerCityDisplay.innerText = '—';
+                        document.getElementById('selectedCustomerId').value = '';
+                        return;
+                    }
+                    const matches = filterCustomers(query);
+                    showSuggestions(matches);
+                });
+
+                customerSearchInput.addEventListener('focus', function() {
+                    const query = this.value.trim();
+                    if (query) {
+                        const matches = filterCustomers(query);
+                        showSuggestions(matches);
+                    }
+                });
+
+                document.addEventListener('click', function(e) {
+                    if (!customerSearchInput.contains(e.target) && !suggestionsContainer.contains(e.target)) {
+                        suggestionsContainer.classList.add('hidden');
+                    }
+                });
+            }
 
             function openModal() {
                 // Prevent background scrolling
@@ -575,6 +616,20 @@
                                 customerCityDisplay.innerText = data.customer.customer_city;
                             }
                             
+                            // Also add the new customer to local suggestions list
+                            if (typeof customersList !== 'undefined') {
+                                customersList.push({
+                                    id: data.customer.id,
+                                    company_name: data.customer.customer_company_name,
+                                    name: data.customer.customer_name,
+                                    phone: data.customer.customer_phone_number,
+                                    city: data.customer.customer_city
+                                });
+                            }
+                            
+                            // Set selected customer ID for order save
+                            document.getElementById('selectedCustomerId').value = data.customer.id;
+
                             // Close modal with style
                             closeModal();
                         } else {
@@ -594,6 +649,659 @@
                 });
             }
         });
+    </script>
+
+    <!-- Inventory Items Data JSON -->
+    <script id="inventory-data" type="application/json">
+        [
+            {% for item in inventory_items %}
+                {
+                    "id": {{ item.id }},
+                    "part_name": "{{ item.part_name|escapejs }}",
+                    "sku": "{{ item.sku|escapejs }}",
+                    "category": "{{ item.get_category_display|escapejs }}",
+                    "brand": "{{ item.get_brand_display|escapejs }}",
+                    "stock": {{ item.initial_stock }},
+                    "wholesale_price": {{ item.wholesale_price }},
+                    "retail_price": {{ item.retail_price }},
+                    "is_taxable": {{ item.is_taxable|yesno:"true,false" }},
+                    "vehicles": "{% for v in item.vehicle_compatibilities.all %}{{ v.get_make_display|escapejs }} {{ v.model_name|escapejs }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+                }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ]
+    </script>
+
+    <!-- Order Logic Script -->
+    <script>
+        (function() {
+            // ── State ──────────────────────────────────────────────────
+            let inventoryList = [];
+            const orderItems = []; // { id, part_name, sku, brand, vehicles, stock, price, qty }
+
+            // ── DOM References ─────────────────────────────────────────
+            const itemSearchInput     = document.getElementById('itemSearch');
+            const itemSuggestions     = document.getElementById('itemSuggestions');
+            const orderContainer      = document.getElementById('orderItemsContainer');
+            const emptyPlaceholder    = document.getElementById('emptyOrderPlaceholder');
+            const summaryTotalItems   = document.getElementById('summaryTotalItems');
+            const summarySubtotal     = document.getElementById('summarySubtotal');
+            const summaryDiscount     = document.getElementById('summaryDiscount');
+            const summaryFinalTotal   = document.getElementById('summaryFinalTotal');
+
+            // ── Load inventory data ────────────────────────────────────
+            const invDataEl = document.getElementById('inventory-data');
+            if (invDataEl) {
+                try {
+                    inventoryList = JSON.parse(invDataEl.textContent);
+                } catch (e) {
+                    console.error('Failed to parse inventory data:', e);
+                }
+            }
+
+            // ── Currency formatter ─────────────────────────────────────
+            function fmt(n) {
+                return '₹' + Number(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
+
+            // ── Search & Suggestions ───────────────────────────────────
+            function filterInventory(query) {
+                if (!query) return [];
+                const q = query.toLowerCase();
+                return inventoryList.filter(item =>
+                    item.part_name.toLowerCase().includes(q) ||
+                    item.sku.toLowerCase().includes(q) ||
+                    (item.vehicles && item.vehicles.toLowerCase().includes(q))
+                ).slice(0, 10); // max 10 results
+            }
+
+            function renderSuggestions(matches) {
+                itemSuggestions.innerHTML = '';
+                if (matches.length === 0) {
+                    itemSuggestions.classList.add('hidden');
+                    return;
+                }
+
+                matches.forEach(item => {
+                    const alreadyAdded = orderItems.some(o => o.id === item.id);
+                    const stockColor = item.stock <= 5 ? 'text-error' : (item.stock <= 15 ? 'text-amber-700' : 'text-emerald-700');
+
+                    const div = document.createElement('div');
+                    div.className = `p-3 ${alreadyAdded ? 'opacity-50 cursor-default' : 'hover:bg-surface-container cursor-pointer'} text-body-md text-on-surface select-none border-b border-outline-variant/30 last:border-b-0 transition-colors`;
+
+                    div.innerHTML = `
+                        <div class="flex justify-between items-center">
+                            <div class="font-semibold text-primary">${item.part_name}</div>
+                            <div class="text-data-mono font-medium text-primary">${fmt(item.retail_price)}</div>
+                        </div>
+                        <div class="text-body-sm text-on-surface-variant flex justify-between mt-0.5">
+                            <span>SKU: ${item.sku} · ${item.brand}</span>
+                            <span class="${stockColor} font-semibold">Stock: ${item.stock}</span>
+                        </div>
+                        ${alreadyAdded ? '<div class="text-body-sm text-secondary font-semibold mt-1">✓ Already in order</div>' : ''}
+                    `;
+
+                    if (!alreadyAdded) {
+                        div.addEventListener('click', () => {
+                            addItemToOrder(item);
+                            itemSearchInput.value = '';
+                            itemSuggestions.classList.add('hidden');
+                        });
+                    }
+
+                    itemSuggestions.appendChild(div);
+                });
+
+                itemSuggestions.classList.remove('hidden');
+            }
+
+            if (itemSearchInput && itemSuggestions) {
+                itemSearchInput.addEventListener('input', function() {
+                    const q = this.value.trim();
+                    if (!q) { itemSuggestions.classList.add('hidden'); return; }
+                    renderSuggestions(filterInventory(q));
+                });
+
+                itemSearchInput.addEventListener('focus', function() {
+                    const q = this.value.trim();
+                    if (q) renderSuggestions(filterInventory(q));
+                });
+
+                document.addEventListener('click', function(e) {
+                    if (!itemSearchInput.contains(e.target) && !itemSuggestions.contains(e.target)) {
+                        itemSuggestions.classList.add('hidden');
+                    }
+                });
+            }
+
+            // ── Add Item to Order ──────────────────────────────────────
+            function addItemToOrder(item) {
+                const orderItem = {
+                    id: item.id,
+                    part_name: item.part_name,
+                    sku: item.sku,
+                    brand: item.brand,
+                    vehicles: item.vehicles || '',
+                    stock: item.stock,
+                    price: Number(item.retail_price),
+                    qty: 1
+                };
+                orderItems.push(orderItem);
+                renderOrderItems();
+                updateSummary();
+            }
+
+            // ── Render Order Items ─────────────────────────────────────
+            function renderOrderItems() {
+                // Remove all item cards (keep placeholder)
+                const cards = orderContainer.querySelectorAll('.order-item-card');
+                cards.forEach(c => c.remove());
+
+                if (orderItems.length === 0) {
+                    emptyPlaceholder.classList.remove('hidden');
+                    return;
+                }
+
+                emptyPlaceholder.classList.add('hidden');
+
+                orderItems.forEach((item, index) => {
+                    const subtotal = item.price * item.qty;
+                    const stockBadgeColor = item.stock <= 5
+                        ? 'bg-red-100 text-red-800'
+                        : (item.stock <= 15 ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800');
+
+                    const card = document.createElement('div');
+                    card.className = 'order-item-card bg-surface-container-lowest border border-outline-variant rounded-lg p-3 shadow-[0_2px_8px_rgba(26,43,76,0.03)] flex flex-col gap-sm';
+                    card.dataset.index = index;
+
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-body-lg font-body-lg font-semibold text-primary">${item.part_name}</h3>
+                                <p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">${item.vehicles ? item.vehicles + ' | ' : ''}${item.brand}</p>
+                            </div>
+                            <button aria-label="Remove item" class="remove-item-btn text-error hover:bg-error-container/20 p-1 rounded-full transition-colors" data-index="${index}">
+                                <span class="material-symbols-outlined text-[20px]">close</span>
+                            </button>
+                        </div>
+                        <div class="flex justify-between items-center mt-1">
+                            <div class="flex items-center gap-2">
+                                <span class="bg-surface-container px-2 py-0.5 rounded text-label-caps font-label-caps text-on-surface-variant">SKU: ${item.sku}</span>
+                                <span class="${stockBadgeColor} px-2 py-0.5 rounded text-label-caps font-label-caps">Stock: ${item.stock}</span>
+                            </div>
+                            <div class="text-data-mono font-data-mono text-primary">${fmt(item.price)}</div>
+                        </div>
+                        <div class="flex justify-between items-center mt-2 border-t border-outline-variant pt-2">
+                            <div class="flex items-center border border-outline-variant rounded-md bg-surface overflow-hidden shadow-sm">
+                                <button class="qty-dec-btn px-3 py-1 bg-surface hover:bg-surface-container-high transition-colors text-on-surface-variant border-r border-outline-variant" data-index="${index}">
+                                    <span class="material-symbols-outlined text-[18px]">remove</span>
+                                </button>
+                                <input class="qty-input w-12 text-center text-data-mono font-data-mono border-none focus:ring-0 p-1 bg-surface" min="1" max="${item.stock}" type="number" value="${item.qty}" data-index="${index}" />
+                                <button class="qty-inc-btn px-3 py-1 bg-surface hover:bg-surface-container-high transition-colors text-on-surface-variant border-l border-outline-variant" data-index="${index}">
+                                    <span class="material-symbols-outlined text-[18px]">add</span>
+                                </button>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-label-caps font-label-caps text-on-surface-variant">Subtotal</p>
+                                <p class="item-subtotal text-headline-sm font-headline-sm text-primary-container font-bold">${fmt(subtotal)}</p>
+                            </div>
+                        </div>
+                    `;
+
+                    orderContainer.appendChild(card);
+                });
+
+                // Bind event listeners on newly rendered cards
+                bindCardEvents();
+            }
+
+            // ── Bind Card Events ───────────────────────────────────────
+            function bindCardEvents() {
+                // Remove buttons
+                document.querySelectorAll('.remove-item-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const idx = parseInt(this.dataset.index);
+                        orderItems.splice(idx, 1);
+                        renderOrderItems();
+                        updateSummary();
+                    });
+                });
+
+                // Decrement buttons
+                document.querySelectorAll('.qty-dec-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const idx = parseInt(this.dataset.index);
+                        if (orderItems[idx].qty > 1) {
+                            orderItems[idx].qty--;
+                            renderOrderItems();
+                            updateSummary();
+                        }
+                    });
+                });
+
+                // Increment buttons
+                document.querySelectorAll('.qty-inc-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const idx = parseInt(this.dataset.index);
+                        if (orderItems[idx].qty < orderItems[idx].stock) {
+                            orderItems[idx].qty++;
+                            renderOrderItems();
+                            updateSummary();
+                        }
+                    });
+                });
+
+                // Manual quantity input
+                document.querySelectorAll('.qty-input').forEach(input => {
+                    input.addEventListener('change', function() {
+                        const idx = parseInt(this.dataset.index);
+                        let val = parseInt(this.value) || 1;
+                        val = Math.max(1, Math.min(val, orderItems[idx].stock));
+                        orderItems[idx].qty = val;
+                        renderOrderItems();
+                        updateSummary();
+                    });
+                });
+            }
+
+            // ── Update Summary ─────────────────────────────────────────
+            function updateSummary() {
+                let totalQty = 0;
+                let subtotal = 0;
+
+                orderItems.forEach(item => {
+                    totalQty += item.qty;
+                    subtotal += item.price * item.qty;
+                });
+
+                const discountRate = 0.10;
+                const discount = subtotal * discountRate;
+                const finalTotal = subtotal - discount;
+
+                summaryTotalItems.textContent = totalQty;
+                summarySubtotal.textContent = fmt(subtotal);
+                summaryDiscount.textContent = '-' + fmt(discount);
+                summaryFinalTotal.textContent = fmt(finalTotal);
+            }
+
+            // ── Initial render ─────────────────────────────────────────
+            updateSummary();
+
+            // ── Order Modal ────────────────────────────────────────────
+            function showOrderModal(title, message, isError, redirectUrl) {
+                const modal = document.getElementById('orderModal');
+                const icon = document.getElementById('orderModalIcon');
+                const iconWrap = document.getElementById('orderModalIconWrap');
+                const titleEl = document.getElementById('orderModalTitle');
+                const msgEl = document.getElementById('orderModalMessage');
+                const closeBtn = document.getElementById('orderModalCloseBtn');
+
+                titleEl.textContent = title;
+                msgEl.textContent = message;
+
+                if (isError) {
+                    icon.textContent = 'error';
+                    iconWrap.className = 'w-16 h-16 rounded-full flex items-center justify-center bg-error-container/20 text-error';
+                } else {
+                    icon.textContent = 'check_circle';
+                    iconWrap.className = 'w-16 h-16 rounded-full flex items-center justify-center bg-emerald-100 text-emerald-700';
+                }
+
+                const closeAction = () => {
+                    modal.classList.add('opacity-0');
+                    const inner = modal.querySelector('div');
+                    if (inner) inner.classList.replace('scale-100', 'scale-95');
+                    setTimeout(() => {
+                        modal.classList.add('hidden');
+                        if (redirectUrl) window.location.href = redirectUrl;
+                    }, 300);
+                };
+
+                closeBtn.onclick = closeAction;
+                modal.onclick = function(e) { if (e.target === modal) closeAction(); };
+
+                modal.classList.remove('hidden');
+                modal.offsetHeight; // reflow
+                modal.classList.remove('opacity-0');
+                const inner = modal.querySelector('div');
+                if (inner) inner.classList.replace('scale-95', 'scale-100');
+            }
+
+            // ── Save Order ─────────────────────────────────────────────
+            const saveOrderBtn = document.getElementById('saveOrderBtn');
+            if (saveOrderBtn) {
+                saveOrderBtn.addEventListener('click', function() {
+                    const customerId = document.getElementById('selectedCustomerId').value;
+
+                    if (!customerId) {
+                        showOrderModal('Error', 'Please select a customer before saving the order.', true);
+                        return;
+                    }
+
+                    if (orderItems.length === 0) {
+                        showOrderModal('Error', 'Please add at least one item to the order.', true);
+                        return;
+                    }
+
+                    // Disable button to prevent double-click
+                    saveOrderBtn.disabled = true;
+                    saveOrderBtn.innerHTML = `
+                        <span class="animate-spin h-4 w-4 border-2 border-on-secondary border-t-transparent rounded-full"></span>
+                        Saving...
+                    `;
+
+                    const payload = {
+                        customer_id: parseInt(customerId),
+                        discount_percent: 10,
+                        items: orderItems.map(item => ({
+                            id: item.id,
+                            qty: item.qty,
+                            price: item.price
+                        }))
+                    };
+
+                    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
+
+                    fetch("{% url 'save_order' %}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrfToken
+                        },
+                        body: JSON.stringify(payload)
+                    })
+                    .then(response => response.json().then(data => ({ ok: response.ok, data })))
+                    .then(({ ok, data }) => {
+                        if (ok && data.status === 'success') {
+                            showOrderModal('Order Saved!', data.message, false);
+                        } else {
+                            throw new Error(data.message || 'Failed to save order.');
+                        }
+                    })
+                    .catch(error => {
+                        showOrderModal('Error', error.message, true);
+                    })
+                    .finally(() => {
+                        saveOrderBtn.disabled = false;
+                        saveOrderBtn.innerHTML = `
+                            Save Order
+                            <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                        `;
+                    });
+                });
+            }
+
+            // ── Helper escapeHtml ──────────────────────────────────────
+            function escapeHtml(text) {
+                if (!text) return '';
+                return text
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+
+            // ── Generate Invoice ───────────────────────────────────────
+            const generateInvoiceBtn = document.getElementById('generateInvoiceBtn');
+            if (generateInvoiceBtn) {
+                generateInvoiceBtn.addEventListener('click', function() {
+                    const customerId = document.getElementById('selectedCustomerId').value;
+
+                    if (!customerId) {
+                        showOrderModal('Error', 'Please select a customer before generating an invoice.', true);
+                        return;
+                    }
+
+                    if (orderItems.length === 0) {
+                        showOrderModal('Error', 'Please add at least one item to generate an invoice.', true);
+                        return;
+                    }
+
+                    // Extract customer info
+                    const customerSearchVal = document.getElementById('customerSearch').value;
+                    let companyName = customerSearchVal;
+                    let contactPersonName = "";
+                    const match = customerSearchVal.match(/^(.*?)\s*\((.*?)\)$/);
+                    if (match) {
+                        companyName = match[1].trim();
+                        contactPersonName = match[2].trim();
+                    }
+
+                    const customerPhone = document.getElementById('customerPhone').textContent.trim();
+                    const customerCity = document.getElementById('customerCity').textContent.trim();
+
+                    // Generate invoice metadata
+                    const today = new Date();
+                    const invoiceDate = today.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+                    const dueDateObj = new Date();
+                    dueDateObj.setDate(today.getDate() + 30);
+                    const dueDate = dueDateObj.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+                    
+                    const invoiceNo = 'VS-PRO-' + Math.floor(10000 + Math.random() * 90000);
+
+                    // Build table rows
+                    let tableRows = '';
+                    let subtotal = 0;
+
+                    orderItems.forEach((item, index) => {
+                        const lineTotal = item.price * item.qty;
+                        subtotal += lineTotal;
+                        tableRows += `
+                            <tr class="border-b border-slate-100 hover:bg-slate-50/50 transition-colors">
+                                <td class="py-4 px-2 font-mono text-xs text-slate-400">${index + 1}</td>
+                                <td class="py-4 px-4">
+                                    <div class="font-bold text-slate-800">${escapeHtml(item.part_name)}</div>
+                                    <div class="text-xs text-slate-400 mt-0.5">SKU: ${escapeHtml(item.sku)}</div>
+                                </td>
+                                <td class="py-4 px-4 text-slate-600">${escapeHtml(item.brand)}</td>
+                                <td class="py-4 px-4 text-right font-mono">${fmt(item.price)}</td>
+                                <td class="py-4 px-4 text-center font-semibold text-slate-800">${item.qty}</td>
+                                <td class="py-4 px-4 text-right font-mono font-semibold text-slate-900">${fmt(lineTotal)}</td>
+                            </tr>
+                        `;
+                    });
+
+                    const discountRate = 0.10;
+                    const discount = subtotal * discountRate;
+                    const taxableValue = subtotal - discount;
+                    const cgstInclusive = (taxableValue * 9) / 118;
+                    const sgstInclusive = (taxableValue * 9) / 118;
+                    const baseTaxable = taxableValue - cgstInclusive - sgstInclusive;
+
+                    const printWindow = window.open('', '_blank');
+                    if (!printWindow) {
+                        alert('Please allow popups to open the invoice.');
+                        return;
+                    }
+
+                    printWindow.document.write(`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Invoice - Vaishnavi Sales</title>
+    <script src="https://cdn.tailwindcss.com"><\/script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        @media print {
+            body {
+                background-color: #ffffff;
+                color: #000000;
+                padding: 0 !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-border {
+                border: none !important;
+                padding: 0 !important;
+            }
+            .print-shadow-none {
+                box-shadow: none !important;
+            }
+            @page {
+                size: A4;
+                margin: 15mm;
+            }
+        }
+    <\/style>
+</head>
+<body class="p-4 md:p-8">
+    <!-- Action bar -->
+    <div class="max-w-4xl mx-auto mb-6 flex justify-between items-center no-print bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+        <div class="text-sm text-slate-500 font-medium">
+            Proforma Tax Invoice Generator
+        </div>
+        <div class="flex gap-3">
+            <button onclick="window.close()" class="px-4 py-2 text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">
+                Close
+            </button>
+            <button onclick="window.print()" class="px-5 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors flex items-center gap-2 shadow-md hover:shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                Download PDF / Print
+            </button>
+        </div>
+    </div>
+
+    <!-- Invoice Card -->
+    <div class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-md border border-slate-200 print-shadow-none print-border">
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-8 gap-6">
+            <div>
+                <h1 class="text-3xl font-extrabold text-blue-900 tracking-tight">VAISHNAVI SALES</h1>
+                <p class="text-xs font-semibold text-blue-600 tracking-widest mt-1 uppercase">Automotive Spare Parts Wholesaler</p>
+                <div class="text-sm text-slate-500 mt-3 space-y-1">
+                    <p>12, AutoParts Market, Industrial Area,</p>
+                    <p>Pune, Maharashtra - 411018</p>
+                    <p>GSTIN: <span class="font-semibold text-slate-700">27AAAAA1111A1Z1</span></p>
+                    <p>Email: billing@vaishnavisales.com | Ph: +91 98765 43210</p>
+                </div>
+            </div>
+            <div class="text-left md:text-right">
+                <div class="inline-block bg-blue-50 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2">Proforma Invoice</div>
+                <h2 class="text-xl font-bold text-slate-800">Invoice No: ${invoiceNo}</h2>
+                <div class="text-sm text-slate-500 mt-2 space-y-1">
+                    <p>Date: <span class="font-medium text-slate-800">${invoiceDate}</span></p>
+                    <p>Payment Mode: <span class="font-medium text-slate-800">Credit (Net 30)</span></p>
+                    <p>Delivery: <span class="font-medium text-slate-800">Delivery</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bill To -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
+            <div class="bg-slate-50 p-6 rounded-xl border border-slate-100">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Billed To (Buyer)</h3>
+                <h4 class="text-lg font-bold text-slate-800">${companyName}</h4>
+                <p class="text-sm text-slate-600 font-medium mt-1">${contactPersonName || 'Customer Representative'}</p>
+                <div class="text-sm text-slate-500 mt-2 space-y-0.5">
+                    <p class="flex items-center gap-2">
+                        <span class="font-semibold text-slate-600">City:</span> ${customerCity}
+                    </p>
+                    <p class="flex items-center gap-2">
+                        <span class="font-semibold text-slate-600">Phone:</span> ${customerPhone}
+                    </p>
+                </div>
+            </div>
+            <div class="flex flex-col justify-end md:items-end">
+                <div class="text-sm text-slate-500 space-y-1">
+                    <p>Due Date: <span class="font-semibold text-slate-800">${dueDate}</span></p>
+                    <p>Terms: <span class="font-semibold text-slate-800">Net 30 Days</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="border-b border-slate-300 text-slate-600 text-xs font-bold uppercase tracking-wider">
+                        <th class="py-3 px-2">#</th>
+                        <th class="py-3 px-4">Item & Description</th>
+                        <th class="py-3 px-4">Brand</th>
+                        <th class="py-3 px-4 text-right">Unit Price</th>
+                        <th class="py-3 px-4 text-center">Qty</th>
+                        <th class="py-3 px-4 text-right">Total</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+                    ${tableRows}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Summary & Totals -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 border-t border-slate-200 pt-8">
+            <div class="text-xs text-slate-400 space-y-4">
+                <div>
+                    <h4 class="font-bold text-slate-500 uppercase tracking-wider mb-2">Bank Payment Details</h4>
+                    <p class="text-slate-600"><span class="font-semibold">Account Name:</span> Vaishnavi Sales</p>
+                    <p class="text-slate-600"><span class="font-semibold">Bank Name:</span> State Bank of India</p>
+                    <p class="text-slate-600"><span class="font-semibold">Account Number:</span> 123456789012</p>
+                    <p class="text-slate-600"><span class="font-semibold">IFSC Code:</span> SBIN0001234</p>
+                    <p class="text-slate-600"><span class="font-semibold">Branch:</span> Main Branch, Pune</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-500 uppercase tracking-wider mb-1">Terms & Conditions</h4>
+                    <ul class="list-decimal pl-4 space-y-0.5 text-slate-500">
+                        <li>Goods once sold will not be taken back.</li>
+                        <li>Interest at 18% p.a. will be charged for overdue payment.</li>
+                        <li>All disputes are subject to Pune jurisdiction.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="flex flex-col justify-start items-end">
+                <div class="w-full max-w-xs space-y-2.5 text-sm">
+                    <div class="flex justify-between text-slate-500">
+                        <span>Subtotal:</span>
+                        <span class="font-mono text-slate-800 font-medium">${fmt(subtotal)}</span>
+                    </div>
+                    <div class="flex justify-between text-slate-500">
+                        <span>Discount (10%):</span>
+                        <span class="font-mono text-emerald-600 font-semibold">-${fmt(discount)}</span>
+                    </div>
+                    <div class="flex justify-between text-slate-500 border-t border-slate-100 pt-2">
+                        <span>Taxable Value:</span>
+                        <span class="font-mono text-slate-800 font-medium">${fmt(baseTaxable)}</span>
+                    </div>
+                    <div class="flex justify-between text-slate-500">
+                        <span>CGST (9.0%):</span>
+                        <span class="font-mono text-slate-600">${fmt(cgstInclusive)}</span>
+                    </div>
+                    <div class="flex justify-between text-slate-500">
+                        <span>SGST (9.0%):</span>
+                        <span class="font-mono text-slate-600">${fmt(sgstInclusive)}</span>
+                    </div>
+                    <div class="flex justify-between text-blue-900 font-bold border-t-2 border-blue-100 pt-3 text-base">
+                        <span>Final Total (Incl. Tax):</span>
+                        <span class="font-mono text-lg font-bold">${fmt(taxableValue)}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Note -->
+        <div class="mt-16 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center text-xs text-slate-400 gap-4">
+            <p>Thank you for doing business with Vaishnavi Sales!</p>
+            <div class="text-center md:text-right">
+                <div class="h-12 w-40 border-b border-slate-300 mb-1"></div>
+                <p class="font-bold text-slate-600 uppercase font-sans">For Vaishnavi Sales</p>
+                <p class="text-[10px] text-slate-400 font-sans">Authorized Signatory</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+`);
+                    printWindow.document.close();
+                });
+            }
+        })();
     </script>
 
 {% endblock %}
